@@ -1,1 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
+/* Custom Navbar Styles */
+.custom-navbar {
+  background: linear-gradient(to right, #2c3e50, #34495e); /* Gradient background */
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Navbar Link Styles */
+.navbar-nav .nav-item .nav-link {
+  color: #fff !important;
+  padding: 12px 15px;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+/* Active Link Color Change */
+.navbar-nav .nav-item .nav-link.active {
+  color: #f39c12 !important; /* Color for active link */
+  font-weight: bold;
+}
+
+/* Hover Effects for Links */
+.navbar-nav .nav-item .nav-link:hover {
+  color: #f39c12 !important;
+}
+
+/* Dropdown Menu Styling */
+.navbar-nav .nav-item.dropdown .dropdown-menu {
+  background-color: #34495e; /* Darker dropdown menu */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-item {
+  color: #fff !important;
+}
+
+.navbar-nav .nav-item.dropdown .dropdown-item:hover {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+/* Navbar Brand Icon Styling */
+.navbar-brand i {
+  margin-right: 8px;
+  font-size: 1.3rem;
+}
+
+/* Search Form Button Styling */
+.form-control {
+  border-radius: 50px;
+}
+
+.btn-light {
+  border-radius: 50px;
+  background-color: #f39c12;
+  border: none;
+}
+
+.btn-light i {
+  color: #fff;
+}
+
+/* Navbar Active State (Mobile View) */
+.navbar-toggler {
+  border-color: #f39c12;
+}
+
+.navbar-toggler-icon {
+  background-color: #f39c12;
+}
