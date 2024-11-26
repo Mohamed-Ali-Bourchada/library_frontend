@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
       <i class="fas fa-book-reader"></i> Easy Read
@@ -15,11 +15,11 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/catalog" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" href="#catalog" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="fas fa-book"></i> Catalog
           </a>
         </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
@@ -40,6 +40,18 @@
             <i class="fas fa-envelope"></i> Contact
           </a>
         </li>
+        <!-- Add Login and Sign Up links here -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/sign-up" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fas fa-user-plus"></i> Sign Up
+          </a>
+        </li>
       </ul>
       <form class="d-flex ms-lg-3" role="search">
         <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search" />
@@ -50,5 +62,9 @@
     </div>
   </div>
 </nav>
+<!-- Scroll to Top Button -->
+<button id="scrollToTopBtn" class="scroll-to-top-btn" (click)="scrollToTop()">
+  <i class="fas fa-arrow-up"></i>
+</button>
 
 <router-outlet></router-outlet>

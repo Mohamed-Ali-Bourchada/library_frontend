@@ -1,6 +1,6 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-6 col-lg-4">
       <div class="card shadow-sm">
         <div class="card-body">
           <h3 class="card-title text-center">Sign Up</h3>
@@ -39,11 +39,12 @@
 
             <!-- Submit Button -->
             <div class="mb-3 text-center">
-              <button type="submit" class="btn btn-success" [disabled]="!signUpForm.valid">
+              <button type="submit" class="btn btn-primary" [disabled]="!signUpForm.valid">
                 Sign Up
               </button>
             </div>
 
+            <!-- Login Link -->
             <p class="text-center">
               Already have an account? <a routerLink="/login">Login</a>
             </p>

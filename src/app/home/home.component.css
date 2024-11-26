@@ -168,3 +168,49 @@
     max-width: 90%;
   }
 }
+/* Ensure the home section and navbar are aligned initially */
+.home-container {
+  position: relative;
+  margin-top: 0;
+  padding-top: 60px;
+  /* Adjust this padding based on your navbar height */
+  z-index: 1;
+}
+
+.custom-navbar {
+  transition: top 0.3s ease-in-out;
+  /* Smooth transition when scrolling */
+}
+
+/* When the navbar is sticky, it will stick at the top */
+.custom-navbar.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top-btn.show {
+  display: block;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #0056b3;
+}

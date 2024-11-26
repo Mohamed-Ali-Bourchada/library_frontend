@@ -61,10 +61,54 @@
 }
 
 /* Navbar Active State (Mobile View) */
-.navbar-toggler {
-  border-color: #f39c12;
+
+html {
+  scroll-behavior: smooth;
+}
+/* Position the button */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  display: none;
+  /* Hidden by default */
+  font-size: 24px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
-.navbar-toggler-icon {
-  background-color: #f39c12;
+/* Show the button when scrolled down */
+#scrollToTopBtn.show {
+  display: block;
+}
+
+/* Optional: Hover effect */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top-btn.show {
+  display: block;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #0056b3;
 }
