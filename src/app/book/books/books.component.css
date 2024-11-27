@@ -1,0 +1,10 @@
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+  /* Adjust this based on image size */
+}

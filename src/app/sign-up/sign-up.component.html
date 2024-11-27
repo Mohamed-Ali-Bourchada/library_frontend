@@ -1,65 +1,73 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light custom-container">
-  <div class="card p-4 shadow rounded-4" style="width: 400px; border: none;">
+  <div class="card p-4 shadow rounded-4" style="width: 700px; border: none;">
     <div class="text-center mb-4">
       <h3 class="text-primary fw-bold">Sign Up</h3>
       <p class="text-muted small">Join us to unlock all features</p>
     </div>
     <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()" class="needs-validation">
 
-      <!-- Full Name Field -->
-      <div class="mb-3">
-        <label for="fullName" class="form-label fw-semibold">Full Name</label>
-        <input id="fullName" type="text" formControlName="fullName" class="form-control rounded-pill"
-          placeholder="John Doe" />
-        <div *ngIf="f['fullName'].touched && f['fullName'].invalid" class="text-danger small mt-1">
-          {{ f['fullName'].errors?.['required'] ? 'Full name is required.' : '' }}
+      <div class="row">
+        <!-- Left Column for Name, Email, Password -->
+        <div class="col-md-6 mb-3">
+          <!-- Full Name Field -->
+          <label for="fullName" class="form-label fw-semibold">Full Name</label>
+          <input id="fullName" type="text" formControlName="fullName" class="form-control rounded-pill"
+            placeholder="John Doe" />
+          <div *ngIf="f['fullName'].touched && f['fullName'].invalid" class="text-danger small mt-1">
+            {{ f['fullName'].errors?.['required'] ? 'Full name is required.' : '' }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <!-- Email Field -->
+          <label for="email" class="form-label fw-semibold">Email Address</label>
+          <input id="email" type="email" formControlName="email" class="form-control rounded-pill"
+            placeholder="example@example.com" />
+          <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger small mt-1">
+            {{ f['email'].errors?.['required'] ? 'Email is required.' : 'Invalid email format.' }}
+          </div>
         </div>
       </div>
 
-      <!-- Email Field -->
-      <div class="mb-3">
-        <label for="email" class="form-label fw-semibold">Email Address</label>
-        <input id="email" type="email" formControlName="email" class="form-control rounded-pill"
-          placeholder="example@example.com" />
-        <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger small mt-1">
-          {{ f['email'].errors?.['required'] ? 'Email is required.' : 'Invalid email format.' }}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <!-- Password Field -->
+          <label for="password" class="form-label fw-semibold">Password</label>
+          <input id="password" type="password" formControlName="password" class="form-control rounded-pill"
+            placeholder="Enter a strong password" />
+          <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger small mt-1">
+            {{ f['password'].errors?.['required'] ? 'Password is required.' : 'Password must be at least 6 characters.'
+            }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <!-- Confirm Password Field -->
+          <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword"
+            class="form-control rounded-pill" placeholder="Repeat your password" />
+          <div *ngIf="passwordMatchError" class="text-danger small mt-1">Passwords do not match.</div>
         </div>
       </div>
 
-      <!-- Password Field -->
-      <div class="mb-3">
-        <label for="password" class="form-label fw-semibold">Password</label>
-        <input id="password" type="password" formControlName="password" class="form-control rounded-pill"
-          placeholder="Enter a strong password" />
-        <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger small mt-1">
-          {{ f['password'].errors?.['required'] ? 'Password is required.' : 'Password must be at least 6 characters.' }}
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <!-- Address Field -->
+          <label for="adresse" class="form-label fw-semibold">Address</label>
+          <input id="adresse" type="text" formControlName="adresse" class="form-control rounded-pill"
+            placeholder="Enter your address" />
+          <div *ngIf="f['adresse'].touched && f['adresse'].invalid" class="text-danger small mt-1">
+            {{ f['adresse'].errors?.['required'] ? 'Address is required.' : '' }}
+          </div>
         </div>
-      </div>
 
-      <!-- Confirm Password Field -->
-      <div class="mb-3">
-        <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
-        <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control rounded-pill"
-          placeholder="Repeat your password" />
-        <div *ngIf="passwordMatchError" class="text-danger small mt-1">Passwords do not match.</div>
-      </div>
-
-      <!-- Address Field -->
-      <div class="mb-3">
-        <label for="adresse" class="form-label fw-semibold">Address</label>
-        <input id="adresse" type="text" formControlName="adresse" class="form-control rounded-pill"
-          placeholder="Enter your address" />
-        <div *ngIf="f['adresse'].touched && f['adresse'].invalid" class="text-danger small mt-1">
-          {{ f['adresse'].errors?.['required'] ? 'Address is required.' : '' }}
-        </div>
-      </div>
-
-      <!-- Date of Birth Field -->
-      <div class="mb-3">
-        <label for="dateNaiss" class="form-label fw-semibold">Date of Birth</label>
-        <input id="dateNaiss" type="date" formControlName="dateNaiss" class="form-control rounded-pill" />
-        <div *ngIf="f['dateNaiss'].touched && f['dateNaiss'].invalid" class="text-danger small mt-1">
-          {{ f['dateNaiss'].errors?.['required'] ? 'Date of birth is required.' : '' }}
+        <div class="col-md-6 mb-3">
+          <!-- Date of Birth Field -->
+          <label for="dateNaiss" class="form-label fw-semibold">Date of Birth</label>
+          <input id="dateNaiss" type="date" formControlName="dateNaiss" class="form-control rounded-pill" />
+          <div *ngIf="f['dateNaiss'].touched && f['dateNaiss'].invalid" class="text-danger small mt-1">
+            {{ f['dateNaiss'].errors?.['required'] ? 'Date of birth is required.' : '' }}
+          </div>
         </div>
       </div>
 

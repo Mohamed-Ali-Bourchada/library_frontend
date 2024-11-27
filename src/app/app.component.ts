@@ -1,26 +1,16 @@
 import { Component, HostListener } from '@angular/core';
+import { NavbarComponent } from './navbar/navbar.component';
+import { BooksComponent } from './book/books/books.component'; // Ajout du composant BooksComponent
 import { RouterOutlet, RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, RouterOutlet, MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatCardModule,],  // Add RouterModule here
+  imports: [RouterModule,
+    RouterOutlet,
+    BooksComponent,
+    NavbarComponent
+],  // Add RouterModule here
 
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']  // Note the typo correction from 'styleUrl' to 'styleUrls'

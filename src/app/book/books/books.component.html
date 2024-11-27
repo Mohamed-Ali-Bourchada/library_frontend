@@ -1,0 +1,30 @@
+<p class="text-center text-primary fs-3 fw-bold">Our Book Collection</p>
+
+<div *ngFor="let book of books" class="row justify-content-center mb-4">
+  <!-- Book Card -->
+  <div class="col-md-4 col-lg-3">
+    <div class="card shadow-sm rounded-3">
+      <!-- Book Image -->
+      <img *ngIf="book.cover" [src]="book.cover" class="card-img-top rounded-3" alt="{{ book.title }}" />
+
+      <div class="card-body">
+        <!-- Book Title -->
+        <h5 class="card-title text-primary">{{ book.title }}</h5>
+
+        <!-- Author -->
+        <p class="text-muted mb-2"><strong>Author:</strong> {{ book.author }}</p>
+
+        <!-- Book Description -->
+        <p class="card-text text-muted">{{ book.description || 'No description available.' }}</p>
+
+        <!-- Book Category -->
+        <p class="text-muted"><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</p>
+      </div>
+
+      <div class="card-footer text-center">
+        <!-- Book State -->
+        <span class="badge bg-success">{{ book.stateBook || 'Available' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
