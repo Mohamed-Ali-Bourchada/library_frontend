@@ -10,9 +10,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<any> {
-    // Encode username and password in base64 for Basic Authentication
-    const base64Credentials = btoa(`${username}:${password}`);
+  login(email: string, password: string): Observable<any> {
+    // Encode email and password in base64 for Basic Authentication
+    const base64Credentials = btoa(`${email}:${password}`);
 
     // Set the Basic Authentication header
     const headers = new HttpHeaders({

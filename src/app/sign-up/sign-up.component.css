@@ -1,83 +1,62 @@
-/* Basic container for the form */
-.sign-up-container {
-  max-width: 450px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Background Styling */
+.bg-light {
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
 }
 
-/* Heading styles */
-.sign-up-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-  color: #333;
+/* Main Container */
+.custom-container {
+  margin-top: 5rem;
+  /* Add spacing below the navbar */
+  padding: 0 15px;
+  /* Add some horizontal padding */
 }
 
-/* Form field styles */
-.form-field {
-  margin-bottom: 1.5rem;
-}
-
-.form-field label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.form-field input {
-  width: 100%;
-  padding: 0.8rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.form-field input:focus {
-  border-color: #007bff;
-}
-
-/* Error messages */
-.error-message-container {
-  margin-top: 0.5rem;
-}
-
-.error-message-container small {
-  color: #d9534f;
-  font-size: 0.9rem;
-}
-
-/* Submit button styles */
-.submit-btn {
-  width: 100%;
-  padding: 1rem;
-  background-color: #007bff;
-  color: white;
+/* Card Styling */
+.card {
   border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
-.submit-btn:hover {
+.card:hover {
+  transform: scale(1.01);
+}
+
+/* Input Focus Effects */
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+/* Button Hover Effect */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
   background-color: #0056b3;
 }
 
-.submit-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+/* Smaller card for smaller screens */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .custom-container {
+    margin-top: 6rem;
+    /* Increase top margin for smaller screens */
+    padding: 0 10px;
+  }
 }
 
-/* General error message styles */
-.error-message-container small {
-  color: #ff6f61;
-  text-align: center;
-  font-size: 1rem;
-  margin-top: 1rem;
+/* Ensure proper spacing for very small screens */
+@media (max-width: 576px) {
+  .custom-container {
+    margin-top: 7rem;
+    /* Extra space for very small screens */
+  }
 }
