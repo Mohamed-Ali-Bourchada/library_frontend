@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';  // Import Router for navigation
 import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel binding
 import { CommonModule } from '@angular/common';  // Import CommonModule for ngIf and other directives
 
@@ -17,7 +18,10 @@ export class LoginComponent {
   emailError: string = ''; // For email specific error
   passwordError: string = ''; // For password specific error
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router // Inject the Router service
+  ) {}
 
   onSubmit() {
     this.emailError = '';  // Reset error messages
@@ -41,7 +45,14 @@ export class LoginComponent {
         // Handle successful login
         console.log('Login successful', response);
         this.errorMessage = ''; // Clear any previous error messages
-        // You can store the authentication token or user details in localStorage or state
+
+        // Example of storing authentication token
+        if (response.token) {
+          localStorage.setItem('authToken', response.token);  // Assuming 'response.token' contains the JWT token
+        }
+
+        // Redirect to the app/home page after successful login
+        this.router.navigate(['/']);  // Replace '/app' with the route you want to redirect to
       },
       (error) => {
         // Handle login error
