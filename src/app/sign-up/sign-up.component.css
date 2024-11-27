@@ -1,40 +1,83 @@
-/* Ensure the body takes up the full screen */
-body,
-html {
-  height: 100%;
-  margin: 0;
+/* Basic container for the form */
+.sign-up-container {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Flexbox for centering the login form */
-.d-flex {
-  display: flex;
-  justify-content: center;
-  /* Centers horizontally */
-  align-items: center;
-  /* Centers vertically */
-  height: 100vh;
-  /* Takes full viewport height */
+/* Heading styles */
+.sign-up-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #333;
 }
 
-.card {
-  width: 100%;
-  max-width: 400px;
-  /* Sets max width to make it responsive */
-  border-radius: 0.75rem;
-  /* Optional: rounded corners */
+/* Form field styles */
+.form-field {
+  margin-bottom: 1.5rem;
 }
 
-.text-center a {
-  color: #007bff;
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
   font-weight: bold;
+  color: #333;
 }
 
-.text-center a:hover {
-  text-decoration: underline;
+.form-field input {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
-/* Input focus color */
-.form-control:focus {
-  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-  border-color: #80bdff;
+.form-field input:focus {
+  border-color: #007bff;
+}
+
+/* Error messages */
+.error-message-container {
+  margin-top: 0.5rem;
+}
+
+.error-message-container small {
+  color: #d9534f;
+  font-size: 0.9rem;
+}
+
+/* Submit button styles */
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* General error message styles */
+.error-message-container small {
+  color: #ff6f61;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 1rem;
 }
