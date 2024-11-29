@@ -1,82 +1,83 @@
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">
-      <i class="fas fa-book-reader"></i> Easy Read
-    </a>
+    <div class="container">
+      <!-- Brand Logo -->
+      <a class="navbar-brand fw-bold d-flex align-items-center text-primary" routerLink="/">
+        <i class="fas fa-book-reader me-2"></i> Easy Read
+      </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Toggler for Mobile View -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <!-- Home Link -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fas fa-home"></i> Home
-          </a>
-        </li>
+      <!-- Navbar Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-2">
+          <!-- Home -->
+          <li class="nav-item">
+            <a class="nav-link text-dark" routerLink="/" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fas fa-home me-1"></i> Home
+            </a>
+          </li>
 
-        <!-- Catalog Link -->
-        <li class="nav-item">
-          <a class="nav-link" href="#catalog" >
-            <i class="fas fa-book"></i> Catalog
-          </a>
-        </li>
+          <!-- Catalog -->
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="#catalog">
+              <i class="fas fa-book me-1"></i> Catalog
+            </a>
+          </li>
 
-        <!-- Admin Dashboard Link (only if the user is an admin) -->
-        <li class="nav-item" *ngIf="isLoggedIn && isAdmin">
-          <a class="nav-link" routerLink="/admin-dashboard">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
-          </a>
-        </li>
+          <!-- Admin Dashboard -->
+          <li class="nav-item" *ngIf="isLoggedIn && isAdmin">
+            <a class="nav-link text-dark" routerLink="/admin-dashboard" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+            </a>
+          </li>
 
-        <!-- User Dropdown (only if logged in) -->
-        <li class="nav-item dropdown" *ngIf="isLoggedIn">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            <i class="fas fa-user"></i> {{ username }}
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
-            <li><a class="dropdown-item" routerLink="/favorites">Favorites</a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" routerLink="/logout" (click)="logout()">Logout</a></li>
-          </ul>
-        </li>
+          <!-- User Dropdown -->
+          <li class="nav-item dropdown" *ngIf="isLoggedIn">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="userDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle me-1"></i> {{ username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+              <li>
+<a class="dropdown-item" (click)="onNavigateToProfile()">Profile</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item text-danger" routerLink="/logout" (click)="logout()">Logout</a>
+              </li>
+            </ul>
+          </li>
 
-        <!-- Login and Sign Up Links (only if not logged in) -->
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fas fa-sign-in-alt"></i> Login
-          </a>
-        </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a class="nav-link" routerLink="/sign-up" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fas fa-user-plus"></i> Sign Up
-          </a>
-        </li>
+          <!-- Login & Sign Up Buttons -->
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <a class="btn btn-outline-primary rounded-pill px-4 py-1" routerLink="/login" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              Login
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <a class="btn btn-primary text-white rounded-pill px-4 py-1" routerLink="/sign-up" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              Sign Up
+            </a>
+          </li>
 
-        <!-- Contact Link -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contact" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fas fa-envelope"></i> Contact
-          </a>
-        </li>
-      </ul>
-
-      <!-- Search Form -->
-      <form class="d-flex ms-lg-3" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search" />
-        <button class="btn btn-light" type="submit">
-          <i class="fas fa-search"></i>
-        </button>
-      </form>
+          <!-- Contact -->
+          <li class="nav-item">
+            <a class="nav-link text-dark" routerLink="/contact" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fas fa-envelope me-1"></i> Contact
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>

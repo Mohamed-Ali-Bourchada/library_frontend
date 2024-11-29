@@ -6,6 +6,7 @@
 /* Main Container */
 .custom-container {
   /* Add spacing below the navbar */
+  margin-top: 5vh;
   padding: 0 15px;
   /* Add some horizontal padding */
 }

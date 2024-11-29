@@ -1,13 +1,66 @@
-<div class="container">
-  <h2>User Profile</h2>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+      <!-- Title -->
+      <h2 class="text-center mb-5 text-primary fw-bold">Update Profile</h2>
 
-  <div *ngIf="user">
-    <p><strong>Email:</strong> {{ user.username }}</p>
-    <p><strong>Admin:</strong> {{ user.isAdmin ? 'Yes' : 'No' }}</p>
+      <!-- User Info Section -->
+      <div class="user-info mb-5 p-4 border rounded-3 bg-light shadow-sm">
+        <h5 class="text-muted mb-3">Your Information</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Full Name:</strong> <span>{{ userForm.value.fullName || 'N/A' }}</span></p>
+            <p><strong>Email:</strong> <span>{{ userForm.value.email || 'N/A' }}</span></p>
+            <p><strong>Phone Number:</strong> <span>{{ userForm.value.phoneNumber || 'N/A' }}</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Address:</strong> <span>{{ userForm.value.adresse || 'N/A' }}</span></p>
+            <p><strong>Date of Birth:</strong> <span>{{ userForm.value.dateNaiss || 'N/A' }}</span></p>
+          </div>
+        </div>
+      </div>
 
-    <!-- Add additional user details or form to update user data -->
-  </div>
-  <div *ngIf="!user">
-    <p>No user data found. Please log in first.</p>
+      <!-- Profile Update Form -->
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="bg-white p-4 rounded-3 shadow-sm">
+        <div class="form-group mb-3">
+          <label for="fullName" class="form-label text-muted">Full Name</label>
+          <input id="fullName" type="text" formControlName="fullName" class="form-control form-control-sm" placeholder="Enter your full name" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="email" class="form-label text-muted">Email</label>
+          <input id="email" type="email" formControlName="email" class="form-control form-control-sm" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="password" class="form-label text-muted">Password</label>
+          <input id="password" type="password" formControlName="password" class="form-control form-control-sm" placeholder="Enter a new password" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="confirmPassword" class="form-label text-muted">Confirm Password</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control form-control-sm" placeholder="Confirm your password" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="adresse" class="form-label text-muted">Address</label>
+          <input id="adresse" type="text" formControlName="adresse" class="form-control form-control-sm" placeholder="Enter your address" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="phoneNumber" class="form-label text-muted">Phone Number</label>
+          <input id="phoneNumber" type="text" formControlName="phoneNumber" class="form-control form-control-sm" placeholder="Enter your phone number" />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-4" [disabled]="userForm.invalid || isLoading">
+          <span *ngIf="isLoading">Updating...</span>
+          <span *ngIf="!isLoading">Update Profile</span>
+        </button>
+      </form>
+
+      <!-- Error and Success Messages -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-4 shadow-sm">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="alert alert-success mt-4 shadow-sm">{{ successMessage }}</div>
+    </div>
   </div>
 </div>

@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },            // Default route for home
@@ -13,12 +15,12 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'profile', component: ProfileComponent },
+{ path: 'profile/:id', component: ProfileComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),BrowserAnimationsModule, ToastrModule.forRoot()],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

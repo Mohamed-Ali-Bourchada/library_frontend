@@ -5,11 +5,9 @@
       <p class="text-muted small">Join us to unlock all features</p>
     </div>
     <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()" class="needs-validation">
-
+      <!-- Full Name and Email Fields -->
       <div class="row">
-        <!-- Left Column for Name, Email, Password -->
         <div class="col-md-6 mb-3">
-          <!-- Full Name Field -->
           <label for="fullName" class="form-label fw-semibold">Full Name</label>
           <input id="fullName" type="text" formControlName="fullName" class="form-control rounded-pill"
             placeholder="John Doe" />
@@ -19,7 +17,6 @@
         </div>
 
         <div class="col-md-6 mb-3">
-          <!-- Email Field -->
           <label for="email" class="form-label fw-semibold">Email Address</label>
           <input id="email" type="email" formControlName="email" class="form-control rounded-pill"
             placeholder="example@example.com" />
@@ -29,9 +26,9 @@
         </div>
       </div>
 
+      <!-- Password and Confirm Password Fields -->
       <div class="row">
         <div class="col-md-6 mb-3">
-          <!-- Password Field -->
           <label for="password" class="form-label fw-semibold">Password</label>
           <input id="password" type="password" formControlName="password" class="form-control rounded-pill"
             placeholder="Enter a strong password" />
@@ -42,7 +39,6 @@
         </div>
 
         <div class="col-md-6 mb-3">
-          <!-- Confirm Password Field -->
           <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
           <input id="confirmPassword" type="password" formControlName="confirmPassword"
             class="form-control rounded-pill" placeholder="Repeat your password" />
@@ -50,9 +46,9 @@
         </div>
       </div>
 
+      <!-- Address and Phone Number Fields -->
       <div class="row">
         <div class="col-md-6 mb-3">
-          <!-- Address Field -->
           <label for="adresse" class="form-label fw-semibold">Address</label>
           <input id="adresse" type="text" formControlName="adresse" class="form-control rounded-pill"
             placeholder="Enter your address" />
@@ -61,8 +57,21 @@
           </div>
         </div>
 
-        <div class="col-md-6 mb-3">
-          <!-- Date of Birth Field -->
+      <div class="col-md-6 mb-3">
+        <label for="telephone" class="form-label fw-semibold">Phone Number</label>
+        <input id="telephone" type="text" formControlName="telephone" class="form-control rounded-pill"
+          placeholder="+1234567890" />
+        <div *ngIf="f['telephone'].touched && f['telephone'].invalid" class="text-danger small mt-1">
+          {{ f['telephone'].errors?.['required'] ? 'Phone number is required.' :
+          f['telephone'].errors?.['pattern'] ? 'Invalid phone number format.' : '' }}
+        </div>
+      </div>
+
+      </div>
+
+      <!-- Date of Birth Field -->
+      <div class="row">
+        <div class="col-md-12 mb-3">
           <label for="dateNaiss" class="form-label fw-semibold">Date of Birth</label>
           <input id="dateNaiss" type="date" formControlName="dateNaiss" class="form-control rounded-pill" />
           <div *ngIf="f['dateNaiss'].touched && f['dateNaiss'].invalid" class="text-danger small mt-1">

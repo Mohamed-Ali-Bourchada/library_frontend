@@ -58,4 +58,16 @@ export class AuthService {
     this.isAdminSubject.next(false);
     this.usernameSubject.next('');
   }
+
+getLoggedInUserId(): number | null {
+  const user = localStorage.getItem('user');
+  if (user) {
+    const parsedUser = JSON.parse(user);
+    console.log(parsedUser.id);
+    return parsedUser.id ? parsedUser.id : null;  // Ensure 'id' exists in the stored user object
+  }
+  return null;
+}
+
+
 }
