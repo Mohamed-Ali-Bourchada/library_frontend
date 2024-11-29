@@ -4,11 +4,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes'; // Import your defined routes
 import { ConfigService } from './app/config.service';
+import { register } from 'swiper/element/bundle';
 
 // Initialize the ConfigService with the base URL
 const configService = new ConfigService();
 configService.setBaseUrl('http://localhost:8081'); // Set your Spring Boot API base URL
-
+ register();
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(), // Provide the HTTP client
