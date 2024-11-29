@@ -8,7 +8,6 @@ import { RouterOutlet, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule,
     RouterOutlet,
-    BooksComponent,
     NavbarComponent
 ],  // Add RouterModule here
 

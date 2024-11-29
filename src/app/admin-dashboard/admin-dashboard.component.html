@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Admin Dashboard</h2>
+
+  <div *ngIf="adminUser">
+    <p>Welcome, Admin: {{ adminUser.username }}</p>
+    <p><strong>Admin privileges:</strong> {{ adminUser.isAdmin ? 'Yes' : 'No' }}</p>
+
+    <!-- Add admin functionality like user management or statistics here -->
+    <button class="btn btn-primary">Manage Users</button>
+    <button class="btn btn-info">View Stats</button>
+  </div>
+
+  <div *ngIf="!adminUser">
+    <p>You do not have admin privileges.</p>
+  </div>
+</div>

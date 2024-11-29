@@ -1,29 +1,47 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  standalone:true,
-  imports: [RouterModule, MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatCardModule,],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+  username: string = '';
 
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.checkLoginStatus();
+  }
+
+  // Check login status
+  checkLoginStatus() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      this.isLoggedIn = true;
+      this.isAdmin = parsedUser.isAdmin;
+      this.username = parsedUser.username;
+    }
+    // Ensure change detection runs
+    this.cdr.detectChanges();
+  }
+
+  // Logout
+  logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    this.isLoggedIn = false;
+    this.isAdmin = false;
+    this.username = '';
+    this.router.navigate(['/login']);
+    // Ensure change detection runs
+    this.cdr.detectChanges();
+  }
 }

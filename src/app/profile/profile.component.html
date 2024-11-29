@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>User Profile</h2>
+
+  <div *ngIf="user">
+    <p><strong>Email:</strong> {{ user.username }}</p>
+    <p><strong>Admin:</strong> {{ user.isAdmin ? 'Yes' : 'No' }}</p>
+
+    <!-- Add additional user details or form to update user data -->
+  </div>
+  <div *ngIf="!user">
+    <p>No user data found. Please log in first.</p>
+  </div>
+</div>

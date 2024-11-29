@@ -46,7 +46,7 @@ export class LoginComponent {
         console.log('Login successful', response);
         this.errorMessage = ''; // Clear any previous error messages
 
-        // Example of storing authentication token
+        // Example of storing authentication token or user details
         if (response.token) {
           localStorage.setItem('authToken', response.token);  // Assuming 'response.token' contains the JWT token
         }
