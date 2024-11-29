@@ -20,8 +20,15 @@
 
         <!-- Catalog Link -->
         <li class="nav-item">
-          <a class="nav-link" href="#catalog">
+          <a class="nav-link" href="#catalog" >
             <i class="fas fa-book"></i> Catalog
+          </a>
+        </li>
+
+        <!-- Admin Dashboard Link (only if the user is an admin) -->
+        <li class="nav-item" *ngIf="isLoggedIn && isAdmin">
+          <a class="nav-link" routerLink="/admin-dashboard">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
           </a>
         </li>
 

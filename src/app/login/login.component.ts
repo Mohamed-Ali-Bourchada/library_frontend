@@ -1,33 +1,34 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';  // Import Router for navigation
-import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel binding
-import { CommonModule } from '@angular/common';  // Import CommonModule for ngIf and other directives
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],  // Add CommonModule here
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  errorMessage: string = ''; // Variable to store the general error message
-  emailError: string = ''; // For email specific error
-  passwordError: string = ''; // For password specific error
+  errorMessage: string = '';
+  emailError: string = '';
+  passwordError: string = '';
 
   constructor(
     private authService: AuthService,
-    private router: Router // Inject the Router service
+    private router: Router
   ) {}
 
   onSubmit() {
-    this.emailError = '';  // Reset error messages
+    this.emailError = '';
     this.passwordError = '';
     this.errorMessage = '';
 
+    // Validate email and password inputs
     if (!this.email) {
       this.emailError = 'Email is required.';
     }
@@ -37,25 +38,26 @@ export class LoginComponent {
     }
 
     if (this.emailError || this.passwordError) {
-      return; // Don't proceed if there are validation errors
+      return;  // Prevent submission if there are errors
     }
 
+    // Call the login method from AuthService
     this.authService.login(this.email, this.password).subscribe(
       (response) => {
-        // Handle successful login
         console.log('Login successful', response);
-        this.errorMessage = ''; // Clear any previous error messages
+        this.errorMessage = '';
 
-        // Example of storing authentication token or user details
-        if (response.token) {
-          localStorage.setItem('authToken', response.token);  // Assuming 'response.token' contains the JWT token
-        }
+        // Store the user details in localStorage and update the state
+        const user = {
+          username: response.fullName,  // Get full name from response
+          isAdmin: response.isAdmin,     // Get isAdmin from response
+        };
+        this.authService.setUserDetails(user, response.token);  // Update the AuthService state
 
-        // Redirect to the app/home page after successful login
-        this.router.navigate(['/']);  // Replace '/app' with the route you want to redirect to
+        // Redirect to the homepage after successful login
+        this.router.navigate(['/']);
       },
       (error) => {
-        // Handle login error
         console.error('Login failed', error);
         this.errorMessage = 'Invalid username or password.';
       }

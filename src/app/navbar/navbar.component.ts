@@ -1,47 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router'; // Import RouterModule
+import { AuthService } from '../services/auth.service'; // Import AuthService
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  standalone: true, // Ensure it's standalone
+  imports: [CommonModule, RouterModule], // Add RouterModule here
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   username: string = '';
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.checkLoginStatus();
+    // Subscribe to login state from AuthService
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+    this.authService.isAdmin$.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
+    this.authService.username$.subscribe(username => {
+      this.username = username;
+    });
   }
 
-  // Check login status
-  checkLoginStatus() {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      this.isLoggedIn = true;
-      this.isAdmin = parsedUser.isAdmin;
-      this.username = parsedUser.username;
-    }
-    // Ensure change detection runs
-    this.cdr.detectChanges();
-  }
-
-  // Logout
   logout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    this.isLoggedIn = false;
-    this.isAdmin = false;
-    this.username = '';
-    this.router.navigate(['/login']);
-    // Ensure change detection runs
-    this.cdr.detectChanges();
+    this.authService.logout();
+    this.router.navigate(['/']);  // Redirect to the home page after logging out
   }
 }
