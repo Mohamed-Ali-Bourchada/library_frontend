@@ -1,29 +1,87 @@
-<p class="text-center text-primary fs-3 fw-bold">Our Book Collection</p>
 
-<div *ngFor="let book of books" class="row justify-content-center mb-4">
-  <!-- Book Card -->
-  <div class="col-md-4 col-lg-3">
-    <div class="card shadow-sm rounded-3">
-      <!-- Book Image -->
-      <img *ngIf="book.cover" [src]="book.cover" class="card-img-top rounded-3" alt="{{ book.title }}" />
-
-      <div class="card-body">
-        <!-- Book Title -->
-        <h5 class="card-title text-primary">{{ book.title }}</h5>
-
-        <!-- Author -->
-        <p class="text-muted mb-2"><strong>Author:</strong> {{ book.author }}</p>
-
-        <!-- Book Description -->
-        <p class="card-text text-muted">{{ book.description || 'No description available.' }}</p>
-
-        <!-- Book Category -->
-        <p class="text-muted"><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</p>
+<div class="categories-section" id="catalog">
+  <h2 class="categories-title">Our Book Collection</h2>
+  <div class="categories-grid">
+    <div class="category-item" *ngFor="let book of books">
+      <div class="category-card">
+        <img src="images/fiction.jpg" alt="Fiction" class="category-image">
+        <div class="category-info">
+          <h3>Titre: {{ book.title }}</h3>
+          <p>Auteur: {{book.author }}</p>
+          <h4><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</h4>
+          <span class="badge bg-success">{{ book.stateBook || 'Available' }}</span>
+        </div>
       </div>
+    </div>  
+  </div>
+</div>
+<!-- pour la cathegorie  -->
+<div class="cathegorie_Filter_Container">
+  <div 
+    class="cathegorie_Filter_items" 
+    [class.active]="selectedCategory === 'all'" 
+    (click)="filterBooks('all')">
+    <h4>all</h4>
+  </div>
+  <div 
+    class="cathegorie_Filter_items" 
+    [class.active]="selectedCategory === 'romantique'" 
+    (click)="filterBooks('romantique')">
+    <h4>romantique</h4>
+  </div>
+  <div 
+    class="cathegorie_Filter_items" 
+    [class.active]="selectedCategory === 'drole'" 
+    (click)="filterBooks('drole')">
+    <h4>drole</h4>
+  </div>
+  <div 
+    class="cathegorie_Filter_items" 
+    [class.active]="selectedCategory === 'dangereux'" 
+    (click)="filterBooks('dangereux')">
+    <h4>dangereux</h4>
+  </div>
+</div>
 
-      <div class="card-footer text-center">
-        <!-- Book State -->
-        <span class="badge bg-success">{{ book.stateBook || 'Available' }}</span>
+<!-- carousel  -->
+<swiper-container loop="true" navigation="true" slides-per-view="2">
+  <swiper-slide *ngFor="let book of books">
+    <div class="category-item"  (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div class="category-card">
+        <img 
+        [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'" 
+        alt="{{ book.title }}" 
+        class="category-image">
+              <div class="category-info">
+          <h3>Titre: {{ book.title }}</h3>
+          <p>Auteur: {{book.author }}</p>
+          <!-- badge bg-success -->
+          <h4><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</h4>
+          <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ book.stateBook || 'Available' }}</span>
+        </div>
+      </div>
+    </div> 
+  </swiper-slide>
+
+</swiper-container>
+<!-- show all book -->
+ <div class="btnShowAll">
+  <div class="btn btn-outline-info ">show all</div>
+ </div>
+<!-- model  -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{BookDetails.title}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
