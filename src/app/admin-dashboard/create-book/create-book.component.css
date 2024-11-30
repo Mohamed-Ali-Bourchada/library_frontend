@@ -1,0 +1,59 @@
+/* Background Styling */
+.bg-light {
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+  }
+  
+  /* Main Container */
+  .custom-container {
+    margin-top: 5vh;
+    padding: 0 15px;
+  }
+  
+  /* Card Styling */
+  .card {
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.01);
+  }
+  
+  /* Input Focus Effects */
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Button Hover Effect */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Smaller card for smaller screens */
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      padding: 1.5rem;
+    }
+  
+    .custom-container {
+      margin-top: 6rem;
+      padding: 0 10px;
+    }
+  }
+  
+  /* Ensure proper spacing for very small screens */
+  @media (max-width: 576px) {
+    .custom-container {
+      margin-top: 7rem;
+    }
+  }
+  

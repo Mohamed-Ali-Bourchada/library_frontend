@@ -1,0 +1,23 @@
+.nav-pills .nav-link {
+    border-radius: 0;
+  }
+  
+  .nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .content {
+    padding: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  

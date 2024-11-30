@@ -6,6 +6,9 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BooksForAdminComponent } from './admin-dashboard/books-for-admin/books-for-admin.component';
+import { UsersForAdminComponent } from './admin-dashboard/users-for-admin/users-for-admin.component';
+import { CreateBookComponent } from './admin-dashboard/create-book/create-book.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },            // Default route for home
@@ -14,7 +17,15 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
 { path: 'profile/:id', component: ProfileComponent },
-  { path: 'admin-dashboard', component: AdminDashboardComponent },
+  { path: 'admin-dashboard', 
+    component: AdminDashboardComponent ,
+  children:[
+    {path:'',component:BooksForAdminComponent},
+    {path:'booksForAdmin',component:BooksForAdminComponent},
+    {path:'usersForAdmin',component:UsersForAdminComponent},
+    {path:'createBook',component:CreateBookComponent}
+  ]
+  },
 ];
 
 @NgModule({
