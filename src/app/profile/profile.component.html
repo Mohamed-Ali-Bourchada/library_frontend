@@ -1,21 +1,162 @@
-<form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="currentPassword">Current Password:</label>
-    <input id="currentPassword" type="password" formControlName="currentPassword" />
+<div class="content-center align-items-center  bg-light custom-container">
+  <!-- First Container (Profile Update) -->
+  <div class="card p-4 shadow rounded-4 mb-4" style="width: 450px; border: none;">
+    <div class="text-center mb-4">
+      <h3 class="text-primary fw-bold">Update Profile Information</h3>
+      <p class="text-muted small">Update your details to keep your profile current.</p>
+    </div>
+
+    <form [formGroup]="userInfoForm" (ngSubmit)="onUpdateUserInfo()">
+      <!-- Success or Error Messages -->
+      <div *ngIf="successMessage" class="alert alert-success mb-4 text-green-600">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert alert-danger mb-4 text-red-600">{{ errorMessage }}</div>
+
+      <!-- Full Name -->
+      <div class="mb-3">
+        <label for="fullName" class="form-label fw-semibold">Full Name</label>
+        <div class="input-group">
+          <input id="fullName" type="text" class="form-control custom-input" formControlName="fullName"
+            placeholder="Enter your full name" />
+          <i class="fas fa-user input-icon"></i>
+        </div>
+        <div *ngIf="userInfoForm.get('fullName')?.invalid && userInfoForm.get('fullName')?.touched"
+          class="text-danger small mt-1">
+          Full Name is required.
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-semibold">Email</label>
+        <div class="input-group">
+          <input id="email" type="email" class="form-control custom-input" formControlName="email"
+            placeholder="Enter your email" />
+          <i class="fas fa-envelope input-icon"></i>
+        </div>
+        <div *ngIf="userInfoForm.get('email')?.invalid && userInfoForm.get('email')?.touched"
+          class="text-danger small mt-1">
+          <div *ngIf="userInfoForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="userInfoForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="mb-3">
+        <label for="adresse" class="form-label fw-semibold">Address</label>
+        <div class="input-group">
+          <input id="adresse" type="text" class="form-control custom-input" formControlName="adresse"
+            placeholder="Enter your address" />
+          <i class="fas fa-home input-icon"></i>
+        </div>
+        <div *ngIf="userInfoForm.get('adresse')?.invalid && userInfoForm.get('adresse')?.touched"
+          class="text-danger small mt-1">
+          Address is required.
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="mb-3">
+        <label for="telephone" class="form-label fw-semibold">Phone Number</label>
+        <div class="input-group">
+          <input id="telephone" type="text" class="form-control custom-input" formControlName="telephone"
+            placeholder="Enter your phone number" />
+          <i class="fas fa-phone input-icon"></i>
+        </div>
+        <div *ngIf="userInfoForm.get('telephone')?.invalid && userInfoForm.get('telephone')?.touched"
+          class="text-danger small mt-1">
+          Phone Number is required.
+        </div>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="mb-3">
+        <label for="dateNaiss" class="form-label fw-semibold">Birth Date</label>
+        <div class="input-group">
+          <input id="dateNaiss" type="date" class="form-control custom-input" formControlName="dateNaiss" />
+          <i class="fas fa-calendar-alt input-icon"></i>
+        </div>
+        <div *ngIf="userInfoForm.get('dateNaiss')?.invalid && userInfoForm.get('dateNaiss')?.touched"
+          class="text-danger small mt-1">
+          Birth Date is required.
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-3" [disabled]="userInfoForm.invalid">
+        <i class="fas fa-save mr-2"></i> Update Information
+      </button>
+    </form>
   </div>
 
-  <div>
-    <label for="newPassword">New Password:</label>
-    <input id="newPassword" type="password" formControlName="newPassword" />
+  <!-- Toggle Password Change Section -->
+  <div class="card p-4 shadow rounded-4" style="width: 450px; border: none;">
+    <div class="text-center mb-4">
+      <h3 class="text-primary fw-bold">Change Password</h3>
+      <p class="text-muted small">Keep your account secure by updating your password.</p>
+    </div>
+
+    <!-- Toggle Button -->
+    <button class="btn btn-outline-primary w-100 rounded-pill py-2 mb-3" (click)="togglePasswordChange()">
+      <i class="fas fa-key mr-2"></i> Change Password
+    </button>
+
+    <!-- Password Form (Collapsed by Default) -->
+    <div [ngClass]="{'password-form': true, 'visible': isPasswordChangeVisible}">
+      <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+        <!-- Success or Error Messages -->
+        <div *ngIf="successMessagePassword" class="alert alert-success mb-4 text-green-600">{{ successMessagePassword }}</div>
+        <div *ngIf="errorMessagePassword" class="alert alert-danger mb-4 text-red-600">{{ errorMessagePassword }}</div>
+
+        <!-- Password Fields -->
+        <div class="mb-3">
+          <label for="currentPassword" class="form-label fw-semibold">Current Password</label>
+          <input id="currentPassword" type="password" class="form-control" formControlName="currentPassword"
+            placeholder="Enter your current password" />
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label fw-semibold">New Password</label>
+          <input id="newPassword" type="password" class="form-control" formControlName="newPassword"
+            placeholder="Enter your new password" />
+        </div>
+        <div class="mb-3">
+          <label for="confirmNewPassword" class="form-label fw-semibold">Confirm New Password</label>
+          <input id="confirmNewPassword" type="password" class="form-control" formControlName="confirmNewPassword"
+            placeholder="Confirm your new password" />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-3" [disabled]="passwordForm.invalid">
+          <i class="fas fa-check-circle mr-2"></i> Change Password
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="content-center align-items-center bg-light">
+    <!-- Other forms like profile update and password change -->
+
+    <!-- Toggle for Delete Account Section -->
+    <div class="card p-4 shadow rounded-4 mb-4" style="width: 450px; border: none;">
+      <div class="text-center mb-4">
+        <h3 class="text-primary fw-bold">Delete Account</h3>
+        <p class="text-muted small">Are you sure you want to delete your account?</p>
+      </div>
+
+      <!-- Toggle Button -->
+      <button class="btn btn-outline-danger w-100 rounded-pill py-2 mb-3" (click)="toggleDeleteAccount()">
+        <i class="fas fa-trash-alt mr-2"></i> Delete Account
+      </button>
+
+      <!-- Delete Account Confirmation Form (Collapsed by Default) -->
+      <div *ngIf="isDeleteAccountVisible" class="text-center">
+        <p class="text-danger">Warning: This action is irreversible!</p>
+        <button class="btn btn-danger w-100 py-2 rounded-pill mt-3" (click)="onDeleteAccount()">
+          <i class="fas fa-trash mr-2"></i> Confirm Delete
+        </button>
+        <button class="btn btn-secondary w-100 py-2 rounded-pill mt-2" (click)="toggleDeleteAccount()">
+          Cancel
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <label for="confirmNewPassword">Confirm New Password:</label>
-    <input id="confirmNewPassword" type="password" formControlName="confirmNewPassword" />
-  </div>
-
-  <button type="submit" [disabled]="passwordForm.invalid">Change Password</button>
-
-  <p *ngIf="successMessage">{{ successMessage }}</p>
-  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-</form>
+</div>

@@ -1,3 +1,53 @@
-form{
-  margin-top: 10vh;
+.custom-input {
+  border-radius: 10px;
+  /* Reduced border radius for input fields */
+  padding-left: 40px;
+  /* Space for the icon inside the input */
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+.custom-container {
+  min-height: 100vh;
+  /* Ensures full height for the parent container */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  margin-top: 100px;
+  /* Keeps background consistent */
+}
+
+.card {
+  margin-bottom: 20px;
+  /* Adjust spacing between cards */
+}
+
+.btn-outline-primary {
+  margin-bottom: 20px;
+  /* Optional: Adds more space between the button and form */
+}
+.password-form {
+  max-height: 0;
+  /* Start with zero height when collapsed */
+  opacity: 0;
+  overflow: hidden;
+  /* Prevent content overflow */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  /* Smooth transition for height and opacity */
+}
+
+.password-form.visible {
+  max-height: 500px;
+  /* Adjust to fit the form height */
+  opacity: 1;
+  visibility: visible;
+  /* Ensure the form remains in the DOM but hidden when collapsed */
 }

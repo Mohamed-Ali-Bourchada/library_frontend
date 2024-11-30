@@ -10,14 +10,14 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   private usernameSubject = new BehaviorSubject<string>('');
-  private emailSubject = new BehaviorSubject<string>('');  // Added for email tracking
+  private emailSubject = new BehaviorSubject<string>('');
   private userIdSubject = new BehaviorSubject<number | null>(null);
-  private passwordSubject = new BehaviorSubject<string>('');  // Store password if required (not recommended for security)
+  private passwordSubject = new BehaviorSubject<string>('');  // Store password if required
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   isAdmin$ = this.isAdminSubject.asObservable();
   username$ = this.usernameSubject.asObservable();
-  email$ = this.emailSubject.asObservable();  // Observable to track email
+  email$ = this.emailSubject.asObservable();
   userId$ = this.userIdSubject.asObservable();
   password$ = this.passwordSubject.asObservable();
 
@@ -33,9 +33,8 @@ export class AuthService {
       this.isLoggedInSubject.next(true);
       this.isAdminSubject.next(parsedUser.isAdmin);
       this.usernameSubject.next(parsedUser.username);
-      this.emailSubject.next(parsedUser.email);  // Retrieve and store email
-      // Avoid storing the password in state, as this poses a security risk
-      this.passwordSubject.next(parsedUser.password || '');  // Retrieve and store password only if absolutely necessary
+      this.emailSubject.next(parsedUser.email);
+      this.passwordSubject.next(parsedUser.password || '');  // Store password from localStorage
       this.userIdSubject.next(parsedUser.id || null);
     }
   }
@@ -45,18 +44,16 @@ export class AuthService {
     this.isLoggedInSubject.next(true);
     this.isAdminSubject.next(user.isAdmin);
     this.usernameSubject.next(user.username);
-    this.emailSubject.next(user.email);  // Save email
-    // Avoid saving password in BehaviorSubject or localStorage unless absolutely necessary
-    this.passwordSubject.next(user.password || '');  // Save password only if needed
+    this.emailSubject.next(user.email);
+    this.passwordSubject.next(user.password);  // Store password
     this.userIdSubject.next(user.id);
 
-    // Store user details in localStorage (including email but avoid storing sensitive information like passwords)
-    localStorage.setItem('user', JSON.stringify(user));  // Store full user details in localStorage
+    // Store user details in localStorage (including email and password)
+    localStorage.setItem('user', JSON.stringify(user));  // Store full user details including password
   }
 
-  // Login method using Basic Authentication (you can pass headers directly in the component)
+  // Login method using Basic Authentication
   login(email: string, password: string, headers: HttpHeaders): Observable<any> {
-    // Make sure to correctly format the URL using template literals
     return this.http.post(`${environment.apiBaseUrl}/api/users/me`, {}, { headers, withCredentials: true });
   }
 
@@ -68,7 +65,6 @@ export class AuthService {
       confirmNewPassword: newPassword // Confirmation matches the new password
     };
 
-    // Correct URL format with template literals
     return this.http.put(`${environment.apiBaseUrl}/api/users/${userId}/change-password`, body, {
       withCredentials: true // Automatically includes session cookies in the request
     });
@@ -76,12 +72,11 @@ export class AuthService {
 
   // Logout and clear session
   logout() {
-    // Clear session and remove user data from localStorage
     localStorage.removeItem('user');
     this.isLoggedInSubject.next(false);
     this.isAdminSubject.next(false);
     this.usernameSubject.next('');
-    this.emailSubject.next('');  // Clear email
+    this.emailSubject.next('');
     this.passwordSubject.next('');
     this.userIdSubject.next(null); // Clear userId
   }
@@ -92,10 +87,12 @@ export class AuthService {
     if (user) {
       const parsedUser = JSON.parse(user);
       return {
-        email: parsedUser.email,  // Return email
-        password: parsedUser.password || ''  // Return password if available (but ideally not store this in localStorage)
+        email: parsedUser.email,
+        password: parsedUser.password || ''
       };
     }
     return null; // Return null if no user found
+
   }
+  
 }

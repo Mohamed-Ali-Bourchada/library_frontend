@@ -26,51 +26,55 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    this.emailError = '';
-    this.passwordError = '';
-    this.errorMessage = '';
+  this.emailError = '';
+  this.passwordError = '';
+  this.errorMessage = '';
 
-    // Validate email and password inputs
-    if (!this.email) {
-      this.emailError = 'Email is required.';
-    }
-
-    if (!this.password) {
-      this.passwordError = 'Password is required.';
-    }
-
-    if (this.emailError || this.passwordError) {
-      return;  // Prevent submission if there are errors
-    }
-
-    // Create Basic Auth header
-    const base64Credentials = btoa(`${this.email}:${this.password}`);
-    const headers = new HttpHeaders().set('Authorization', `Basic ${base64Credentials}`);
-
-    // Call the AuthService login method
-    this.authService.login(this.email, this.password, headers).subscribe(
-      (response: any) => {
-        console.log('Login successful', response);
-        this.errorMessage = '';
-
-        // Set user details in AuthService to manage session state
-        const user = {
-          username: response.fullName,  // Get full name from response
-          isAdmin: response.isAdmin,
-          id: response.id,              // Correctly extract 'id' from the response
-          email: this.email // Add email for consistency (can be used in AuthService if needed)
-        };
-
-        // Update AuthService state and session
-        this.authService.setUserDetails(user);  // Only pass user details, as token is not necessary for Basic Auth with session cookies
-
-        // Redirect to the homepage or dashboard after successful login
-        this.router.navigate(['/']);
-      },
-      (error) => {
-        console.error('Login failed', error);
-        this.errorMessage = 'Invalid email or password.';
-      }
-    );
+  // Validate email and password inputs
+  if (!this.email) {
+    this.emailError = 'Email is required.';
   }
-}
+
+  if (!this.password) {
+    this.passwordError = 'Password is required.';
+  }
+
+  if (this.emailError || this.passwordError) {
+    return;  // Prevent submission if there are errors
+  }
+
+  // Create Basic Auth header
+  const base64Credentials = btoa(`${this.email}:${this.password}`);
+  const headers = new HttpHeaders().set('Authorization', `Basic ${base64Credentials}`);
+
+  // Call the AuthService login method
+  this.authService.login(this.email, this.password, headers).subscribe(
+    (response: any) => {
+      console.log('Login successful', response);
+      this.errorMessage = '';
+
+      // Log email and password here to check if they are available
+      console.log('Email:', this.email);
+      console.log('Password:', this.password);  // Ensure password is logged here
+
+      // Set user details in AuthService to manage session state
+      const user = {
+        username: response.fullName,  // Get full name from response
+        isAdmin: response.isAdmin,
+        id: response.id,              // Correctly extract 'id' from the response
+        email: this.email,            // Store email
+        password: this.password       // Store password
+      };
+
+      // Update AuthService state and session
+      this.authService.setUserDetails(user);  // Store details, including password
+
+      // Redirect to the homepage or dashboard after successful login
+      this.router.navigate(['/']);
+    },
+    (error) => {
+      console.error('Login failed', error);
+      this.errorMessage = 'Invalid email or password.';
+    }
+  );
+  }}

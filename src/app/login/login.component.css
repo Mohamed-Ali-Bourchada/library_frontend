@@ -78,3 +78,18 @@
 .text-primary:hover {
   color: #0056b3;
 }
+.custom-input {
+  border-radius: 8px;
+  /* Reduced border radius for input fields */
+  padding-left: 40px;
+  /* Space for the icon inside the input */
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
