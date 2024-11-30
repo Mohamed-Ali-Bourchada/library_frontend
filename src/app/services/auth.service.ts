@@ -10,16 +10,17 @@ export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   private usernameSubject = new BehaviorSubject<string>('');
+  private userIdSubject = new BehaviorSubject<number | null>(null); // Correct type for userId
 
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
   isAdmin$ = this.isAdminSubject.asObservable();
   username$ = this.usernameSubject.asObservable();
+  userId$ = this.userIdSubject.asObservable(); // Correctly emits userId
 
   constructor(private http: HttpClient) {
-    this.checkLoginStatus();  // Check login status when AuthService is initialized
+    this.checkLoginStatus(); // Check login status when AuthService is initialized
   }
 
-  // Method to check if the user is logged in based on localStorage
   checkLoginStatus() {
     const user = localStorage.getItem('user');
     const token = localStorage.getItem('authToken');
@@ -28,6 +29,7 @@ export class AuthService {
       this.isLoggedInSubject.next(true);
       this.isAdminSubject.next(parsedUser.isAdmin);
       this.usernameSubject.next(parsedUser.username);
+      this.userIdSubject.next(parsedUser.id || null); // Emit userId
     }
   }
 
@@ -40,15 +42,14 @@ export class AuthService {
     return this.http.get(`${environment.apiBaseUrl}/api/users/me`, { headers });
   }
 
-  // Update state after successful login
   setUserDetails(user: any, token: string) {
     this.isLoggedInSubject.next(true);
     this.isAdminSubject.next(user.isAdmin);
     this.usernameSubject.next(user.username);
+    this.userIdSubject.next(user.id); // Emit userId for subscribers
 
-    // Store user details and token in localStorage for persistence
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('user', JSON.stringify(user)); // Store user details
+    localStorage.setItem('authToken', token); // Store token
   }
 
   logout() {
@@ -57,17 +58,20 @@ export class AuthService {
     this.isLoggedInSubject.next(false);
     this.isAdminSubject.next(false);
     this.usernameSubject.next('');
+    this.userIdSubject.next(null); // Clear userId
   }
 
-getLoggedInUserId(): number | null {
-  const user = localStorage.getItem('user');
-  if (user) {
-    const parsedUser = JSON.parse(user);
-    console.log(parsedUser.id);
-    return parsedUser.id ? parsedUser.id : null;  // Ensure 'id' exists in the stored user object
+  getLoggedInUserId(): number | null {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      return parsedUser.id || null; // Return userId if available
+    }
+    return null; // Return null if no user found
   }
-  return null;
-}
 
-
+  // Add the getToken method
+  getToken(): string | null {
+    return localStorage.getItem('authToken'); // Retrieve the token from localStorage
+  }
 }

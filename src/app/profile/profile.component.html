@@ -5,58 +5,119 @@
       <h2 class="text-center mb-5 text-primary fw-bold">Update Profile</h2>
 
       <!-- User Info Section -->
-      <div class="user-info mb-5 p-4 border rounded-3 bg-light shadow-sm">
-        <h5 class="text-muted mb-3">Your Information</h5>
-        <div class="row">
-          <div class="col-md-6">
-            <p><strong>Full Name:</strong> <span>{{ userForm.value.fullName || 'N/A' }}</span></p>
-            <p><strong>Email:</strong> <span>{{ userForm.value.email || 'N/A' }}</span></p>
-            <p><strong>Phone Number:</strong> <span>{{ userForm.value.phoneNumber || 'N/A' }}</span></p>
-          </div>
-          <div class="col-md-6">
-            <p><strong>Address:</strong> <span>{{ userForm.value.adresse || 'N/A' }}</span></p>
-            <p><strong>Date of Birth:</strong> <span>{{ userForm.value.dateNaiss || 'N/A' }}</span></p>
-          </div>
-        </div>
-      </div>
+<!-- User Info Section -->
+<div class="user-info mb-5 p-4 border rounded-3 bg-light shadow-sm">
+  <h5 class="text-muted mb-3">Your Information</h5>
+  <div class="row">
+    <div class="col-md-6">
+      <p><strong>Full Name:</strong> <span>{{ userInfo?.fullName }}</span></p>
+      <p><strong>Email:</strong> <span>{{ userInfo?.email }}</span></p>
+      <p><strong>Phone Number:</strong> <span>{{ userInfo?.telephone }}</span></p>
+    </div>
+    <div class="col-md-6">
+      <p><strong>Address:</strong> <span>{{ userInfo?.adresse }}</span></p>
+      <p><strong>Date of Birth:</strong> <span>{{ userInfo?.dateNaiss }}</span></p>
+    </div>
+  </div>
+</div>
+
 
       <!-- Profile Update Form -->
-      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="bg-white p-4 rounded-3 shadow-sm">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="bg-white p-5 rounded-3 shadow-lg">
+        <!-- Personal Info Fields -->
         <div class="form-group mb-3">
           <label for="fullName" class="form-label text-muted">Full Name</label>
-          <input id="fullName" type="text" formControlName="fullName" class="form-control form-control-sm" placeholder="Enter your full name" />
+          <input id="fullName" type="text" formControlName="fullName" class="form-control form-control-lg"
+            placeholder="Enter your full name" />
+          <div *ngIf="userForm.get('fullName')?.invalid && userForm.get('fullName')?.touched" class="text-danger">
+            Full name is required.
+          </div>
         </div>
 
         <div class="form-group mb-3">
           <label for="email" class="form-label text-muted">Email</label>
-          <input id="email" type="email" formControlName="email" class="form-control form-control-sm" placeholder="Enter your email" />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="password" class="form-label text-muted">Password</label>
-          <input id="password" type="password" formControlName="password" class="form-control form-control-sm" placeholder="Enter a new password" />
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="confirmPassword" class="form-label text-muted">Confirm Password</label>
-          <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control form-control-sm" placeholder="Confirm your password" />
+          <input id="email" type="email" formControlName="email" class="form-control form-control-lg"
+            placeholder="Enter your email" />
+          <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+            Please enter a valid email.
+          </div>
         </div>
 
         <div class="form-group mb-3">
           <label for="adresse" class="form-label text-muted">Address</label>
-          <input id="adresse" type="text" formControlName="adresse" class="form-control form-control-sm" placeholder="Enter your address" />
+          <input id="adresse" type="text" formControlName="adresse" class="form-control form-control-lg"
+            placeholder="Enter your address" />
+          <div *ngIf="userForm.get('adresse')?.invalid && userForm.get('adresse')?.touched" class="text-danger">
+            Address is required.
+          </div>
         </div>
 
         <div class="form-group mb-3">
-          <label for="phoneNumber" class="form-label text-muted">Phone Number</label>
-          <input id="phoneNumber" type="text" formControlName="phoneNumber" class="form-control form-control-sm" placeholder="Enter your phone number" />
+          <label for="telephone" class="form-label text-muted">Phone Number</label>
+          <input id="telephone" type="text" formControlName="telephone" class="form-control form-control-lg"
+            placeholder="Enter your phone number" />
+          <div *ngIf="userForm.get('telephone')?.invalid && userForm.get('telephone')?.touched" class="text-danger">
+            Phone number is required.
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="dateNaiss" class="form-label text-muted">Date of Birth</label>
+          <input id="dateNaiss" type="date" formControlName="dateNaiss" class="form-control form-control-lg" />
+          <div *ngIf="userForm.get('dateNaiss')?.invalid && userForm.get('dateNaiss')?.touched" class="text-danger">
+            Date of birth is required.
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-4" [disabled]="userForm.invalid || isLoading">
+
+        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-4"
+          [disabled]="userForm.invalid || isLoading">
           <span *ngIf="isLoading">Updating...</span>
           <span *ngIf="!isLoading">Update Profile</span>
         </button>
       </form>
+
+      <!-- Password Change Section -->
+      <div class="mt-5">
+        <h5 class="text-muted mb-3">Change Password</h5>
+        <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="bg-white p-5 rounded-3 shadow-lg">
+          <div class="form-group mb-3">
+            <label for="currentPassword" class="form-label text-muted">Current Password</label>
+            <input id="currentPassword" type="password" formControlName="currentPassword"
+              class="form-control form-control-lg" placeholder="Enter your current password" />
+            <div *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched"
+              class="text-danger">
+              Current password is required.
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="newPassword" class="form-label text-muted">New Password</label>
+            <input id="newPassword" type="password" formControlName="newPassword" class="form-control form-control-lg"
+              placeholder="Enter a new password" />
+            <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched"
+              class="text-danger">
+              Password is required and must be at least 6 characters.
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="confirmNewPassword" class="form-label text-muted">Confirm New Password</label>
+            <input id="confirmNewPassword" type="password" formControlName="confirmNewPassword"
+              class="form-control form-control-lg" placeholder="Confirm new password" />
+            <div
+              *ngIf="passwordForm.get('confirmNewPassword')?.invalid && passwordForm.get('confirmNewPassword')?.touched"
+              class="text-danger">
+              Password confirmation is required and must match the new password.
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-4"
+            [disabled]="passwordForm.invalid || isLoading">
+            <span *ngIf="isLoading">Updating...</span>
+            <span *ngIf="!isLoading">Change Password</span>
+          </button>
+        </form>
+      </div>
 
       <!-- Error and Success Messages -->
       <div *ngIf="errorMessage" class="alert alert-danger mt-4 shadow-sm">{{ errorMessage }}</div>

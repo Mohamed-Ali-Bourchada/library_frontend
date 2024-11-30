@@ -17,6 +17,7 @@ export class LoginComponent {
   errorMessage: string = '';
   emailError: string = '';
   passwordError: string = '';
+  id:number | undefined;
 
   constructor(
     private authService: AuthService,
@@ -50,7 +51,8 @@ export class LoginComponent {
         // Store the user details in localStorage and update the state
         const user = {
           username: response.fullName,  // Get full name from response
-          isAdmin: response.isAdmin,     // Get isAdmin from response
+          isAdmin: response.isAdmin,
+          id: response.id,        // Correctly extract 'id' from the response
         };
         this.authService.setUserDetails(user, response.token);  // Update the AuthService state
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule, ActivatedRoute, Params } from '@angular/router'; // Import ActivatedRoute and Params
-import { AuthService } from '../services/auth.service'; // Import AuthService
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,47 +14,43 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   username: string = '';
-  userId: number | null = null;  // Declare userId property
+  userId: number | null = null; // Correctly declare userId
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Subscribe to login state from AuthService
-    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+    // Subscribe to login state
+    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
     });
-    this.authService.isAdmin$.subscribe(isAdmin => {
+
+    // Subscribe to admin state
+    this.authService.isAdmin$.subscribe((isAdmin) => {
       this.isAdmin = isAdmin;
     });
-    this.authService.username$.subscribe(username => {
+
+    // Subscribe to username
+    this.authService.username$.subscribe((username) => {
       this.username = username;
     });
 
-    // Subscribe to queryParams to access userId from URL
-    this.route.queryParams.subscribe((params: Params) => {  // Explicitly type params as Params
-      const id = params['id'];
-      this.userId = id ? +id : null;  // Convert id to a number using the unary + operator
+    // Subscribe to userId
+    this.authService.userId$.subscribe((userId) => {
+      this.userId = userId;
+      console.log('User ID in Navbar:', this.userId); // Debug log
     });
   }
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/']);  // Redirect to the home page after logging out
+    this.router.navigate(['/']); // Redirect to home page
   }
-onNavigateToProfile(): void {
-  const userId = this.authService.getLoggedInUserId();  // Ensure this method returns the correct userId
 
-  if (userId) {
-    console.log('Navigating to profile with userId:', userId);  // Log userId to verify it's correct
-    this.router.navigate(['/profile', userId]);  // Correctly navigate to '/profile/:id'
-  } else {
-    console.error('User ID is not available.');
+  onNavigateToProfile(): void {
+    if (this.userId) {
+      this.router.navigate(['/profile', this.userId]); // Navigate to profile with userId
+    } else {
+      console.error('User ID is not available.');
+    }
   }
-}
-
-
-
-
-
-
 }
