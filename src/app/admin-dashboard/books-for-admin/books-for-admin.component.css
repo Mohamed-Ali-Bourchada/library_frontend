@@ -1,0 +1,6 @@
+.sujet {
+    white-space: nowrap;          /* Empêche le texte de passer à la ligne */
+    overflow: hidden;             /* Cache le texte qui dépasse */
+    text-overflow: ellipsis;      /* Ajoute des points de suspension à la fin du texte coupé */
+    max-width: 200px;             /* Définissez une largeur maximale pour la cellule, ajustez-la selon votre besoin */
+  }

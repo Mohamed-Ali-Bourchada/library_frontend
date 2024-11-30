@@ -1,0 +1,140 @@
+<div class="container mt-4">
+    <!-- Barre de filtres -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <!-- Section des filtres -->
+        <div>
+          <button class="btn btn-outline-primary me-2">All</button>
+          <button class="btn btn-outline-success me-2">Disponible</button>
+          <button class="btn btn-outline-danger">Non Disponibles</button>
+        </div>
+      
+        <!-- Section de recherche alignée à droite -->
+        <div class="d-flex align-items-center">
+          <input 
+            type="text" 
+            class="form-control w-50 me-2" 
+            placeholder="Rechercher un livre..."
+              >
+              <!-- [(ngModel)]="searchTerm" -->
+              <!-- Liens bidirectionnels pour la recherche -->
+          
+          <button 
+            class="btn btn-outline-secondary"
+            >Rechercher</button>
+            <!-- (click)="searchBooks()" -->
+        </div>
+      </div>
+      
+  
+    <!-- Tableau des livres -->
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Category</th>
+            <th>Sujet</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books">
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>
+              <span [class]="book.stateBook == 'disponible' ? 'badge bg-success' : 'badge bg-danger'">
+                {{ book.stateBook || 'Available' }}
+              </span>
+            </td>
+            <td>{{ book.category }}</td>
+            <td class="sujet">{{ book.sujet }}</td>
+            <td>
+              <div class="btn btn-warning m-1" (click)="openModal(book)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Modifier
+              </div>
+              <div class="btn btn-danger m-1" >
+                Supprimer
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Modal -->
+     <!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #007bff; color: white;">
+          <h5 class="modal-title" id="exampleModalLabel">Modifier les informations du livre</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Colonne gauche (Image) -->
+            <!-- <div class="col-md-4">
+              <label for="bookCover" class="form-label">Couverture du livre</label>
+              <div class="d-flex justify-content-center">
+                <input type="file" id="bookCover" class="form-control" >
+              </div>
+              <div *ngIf="selectedBook.cover" class="mt-3">
+                <img div class="category-card">
+                <img 
+                [src]="selectedBook.cover ? 'data:image/jpeg;base64,' + selectedBook.cover : 'images/bookCover.jpg'" 
+                alt="{{ selectedBook.title }}" class="img-fluid rounded" style="max-height: 250px; width: auto;">
+              </div>
+            </div> -->
+  
+            <!-- Colonne droite (données du livre) -->
+            <div class="col">
+              <form>
+                <!-- Titre -->
+                <div class="mb-3">
+                  <label for="bookTitle" class="form-label">Titre</label>
+                  <input type="text" id="bookTitle" [(ngModel)]="selectedBook.title" name="title" class="form-control" placeholder="Entrez le titre du livre">
+                </div>
+  
+                <!-- Auteur -->
+                <div class="mb-3">
+                  <label for="bookAuthor" class="form-label">Auteur</label>
+                  <input type="text" id="bookAuthor" [(ngModel)]="selectedBook.author" name="author" class="form-control" placeholder="Entrez l'auteur du livre">
+                </div>
+  
+                <!-- Catégorie -->
+
+                <div class="mb-3">
+                  <label for="bookCategory" class="form-label" >Catégorie</label>
+
+                  <!-- à changer  -->
+                  <select id="bookCategory" [(ngModel)]="selectedBook.category" name="category" class="form-control" [value]="selectedBook.category">
+                    <option value="romantique">Romantique</option>
+                    <option value="drôle">Drôle</option>
+                    <option value="science-fiction">Science-fiction</option>
+                    <option value="histoire">Histoire</option>
+                  </select>
+
+                  
+
+
+                </div>
+  
+                <!-- Sujet -->
+                <div class="mb-3">
+                  <label for="bookSujet" class="form-label">Sujet</label>
+                  <textarea id="bookSujet" [(ngModel)]="selectedBook.sujet" name="sujet" class="form-control" rows="3" placeholder="Entrez le sujet du livre"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges()">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

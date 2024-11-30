@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <!-- Barre de navigation -->
+    <nav class="nav nav-pills mb-4">
+      <a 
+        class="nav-link" 
+        routerLink="/admin-dashboard/booksForAdmin" 
+        routerLinkActive="active"
+      >
+        Books
+      </a>
+      <a 
+        class="nav-link" 
+        routerLink="/admin-dashboard/usersForAdmin" 
+        routerLinkActive="active"
+      >
+        Users
+      </a>
+      <a 
+        class="nav-link" 
+        routerLink="/admin-dashboard/createBook" 
+        routerLinkActive="active"
+      >
+        Create Book
+      </a>
+    </nav>
+  
+    <!-- Zone dynamique pour le contenu -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
