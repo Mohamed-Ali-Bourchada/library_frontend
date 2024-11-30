@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,11 @@ export class LoginComponent {
   errorMessage: string = '';
   emailError: string = '';
   passwordError: string = '';
-  id:number | undefined;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient // Added HttpClient for Basic Auth
   ) {}
 
   onSubmit() {
@@ -42,26 +43,33 @@ export class LoginComponent {
       return;  // Prevent submission if there are errors
     }
 
-    // Call the login method from AuthService
-    this.authService.login(this.email, this.password).subscribe(
-      (response) => {
+    // Create Basic Auth header
+    const base64Credentials = btoa(`${this.email}:${this.password}`);
+    const headers = new HttpHeaders().set('Authorization', `Basic ${base64Credentials}`);
+
+    // Call the AuthService login method
+    this.authService.login(this.email, this.password, headers).subscribe(
+      (response: any) => {
         console.log('Login successful', response);
         this.errorMessage = '';
 
-        // Store the user details in localStorage and update the state
+        // Set user details in AuthService to manage session state
         const user = {
           username: response.fullName,  // Get full name from response
           isAdmin: response.isAdmin,
-          id: response.id,        // Correctly extract 'id' from the response
+          id: response.id,              // Correctly extract 'id' from the response
+          email: this.email // Add email for consistency (can be used in AuthService if needed)
         };
-        this.authService.setUserDetails(user, response.token);  // Update the AuthService state
 
-        // Redirect to the homepage after successful login
+        // Update AuthService state and session
+        this.authService.setUserDetails(user);  // Only pass user details, as token is not necessary for Basic Auth with session cookies
+
+        // Redirect to the homepage or dashboard after successful login
         this.router.navigate(['/']);
       },
       (error) => {
         console.error('Login failed', error);
-        this.errorMessage = 'Invalid username or password.';
+        this.errorMessage = 'Invalid email or password.';
       }
     );
   }
