@@ -30,9 +30,10 @@
     <table class="table table-striped">
         <thead>
           <tr>
-            <th>#</th>
+            <th>cover</th>
             <th>Titre</th>
             <th>Auteur</th>
+            <th>Disponibilité</th>
             <th>Category</th>
             <th>Sujet</th>
             <th>Action</th>
@@ -40,6 +41,17 @@
         </thead>
         <tbody>
           <tr *ngFor="let book of books">
+            <td>
+              <div class="image-container">
+                <!-- Image avec agrandissement au survol -->
+                <img 
+                  [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'" 
+                  alt="{{ book.title }}" 
+                  class="category-image" 
+                  style="height: 50px; width: 70px;" 
+                  (click)="openCoverModal(book)">
+              </div>
+            </td>
             <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
             <td>
@@ -53,7 +65,7 @@
               <div class="btn btn-warning m-1" (click)="openModal(book)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Modifier
               </div>
-              <div class="btn btn-danger m-1" >
+              <div class="btn btn-danger m-1" (click)="deletBook(book.id)">
                 Supprimer
               </div>
             </td>
@@ -73,21 +85,6 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <!-- Colonne gauche (Image) -->
-            <!-- <div class="col-md-4">
-              <label for="bookCover" class="form-label">Couverture du livre</label>
-              <div class="d-flex justify-content-center">
-                <input type="file" id="bookCover" class="form-control" >
-              </div>
-              <div *ngIf="selectedBook.cover" class="mt-3">
-                <img div class="category-card">
-                <img 
-                [src]="selectedBook.cover ? 'data:image/jpeg;base64,' + selectedBook.cover : 'images/bookCover.jpg'" 
-                alt="{{ selectedBook.title }}" class="img-fluid rounded" style="max-height: 250px; width: auto;">
-              </div>
-            </div> -->
-  
-            <!-- Colonne droite (données du livre) -->
             <div class="col">
               <form>
                 <!-- Titre -->
@@ -105,22 +102,12 @@
                 <!-- Catégorie -->
 
                 <div class="mb-3">
-                  <label for="bookCategory" class="form-label" >Catégorie</label>
-
-                  <!-- à changer  -->
-                  <select id="bookCategory" [(ngModel)]="selectedBook.category" name="category" class="form-control" [value]="selectedBook.category">
-                    <option value="romantique">Romantique</option>
-                    <option value="drôle">Drôle</option>
-                    <option value="science-fiction">Science-fiction</option>
-                    <option value="histoire">Histoire</option>
+                  <label for="bookCategory" class="form-label">Catégorie</label>
+                  <select id="bookCategory" [(ngModel)]="selectedBook.category" name="category" class="form-control">
+                    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
                   </select>
-
-                  
-
-
                 </div>
-  
-                <!-- Sujet -->
+                <!-- sujet -->
                 <div class="mb-3">
                   <label for="bookSujet" class="form-label">Sujet</label>
                   <textarea id="bookSujet" [(ngModel)]="selectedBook.sujet" name="sujet" class="form-control" rows="3" placeholder="Entrez le sujet du livre"></textarea>
@@ -131,10 +118,40 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary" (click)="saveChanges()">Enregistrer les modifications</button>
-        </div>
+          <button 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="saveChanges()" 
+          data-bs-dismiss="modal">
+          Enregistrer les modifications
+        </button>        </div>
       </div>
     </div>
   </div>
   
+<!-- Modal pour changer l'image -->
+ <!-- a changer le code car ne fonctionne pas  -->
+<div class="modal fade" id="coverModal" tabindex="-1" aria-labelledby="coverModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="coverModalLabel">Changer la couverture</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="file" (change)="onCoverFileSelected($event)" accept="image/*" class="form-control" />
+        <img 
+          *ngIf="selectedBook.cover" 
+          [src]="'data:image/jpeg;base64,' + selectedBook.cover" 
+          alt="Aperçu de la couverture" 
+          class="img-fluid mt-3" 
+          style="max-height: 300px;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="updateCover(selectedBook.cover)">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
   
