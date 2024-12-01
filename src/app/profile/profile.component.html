@@ -1,4 +1,4 @@
-<div class="content-center align-items-center  bg-light custom-container">
+<div class="content-center align-items-center bg-light custom-container">
   <!-- First Container (Profile Update) -->
   <div class="card p-4 shadow rounded-4 mb-4" style="width: 450px; border: none;">
     <div class="text-center mb-4">
@@ -7,10 +7,6 @@
     </div>
 
     <form [formGroup]="userInfoForm" (ngSubmit)="onUpdateUserInfo()">
-      <!-- Success or Error Messages -->
-      <div *ngIf="successMessage" class="alert alert-success mb-4 text-green-600">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="alert alert-danger mb-4 text-red-600">{{ errorMessage }}</div>
-
       <!-- Full Name -->
       <div class="mb-3">
         <label for="fullName" class="form-label fw-semibold">Full Name</label>
@@ -88,7 +84,7 @@
     </form>
   </div>
 
-  <!-- Toggle Password Change Section -->
+  <!-- Second Container (Change Password) -->
   <div class="card p-4 shadow rounded-4" style="width: 450px; border: none;">
     <div class="text-center mb-4">
       <h3 class="text-primary fw-bold">Change Password</h3>
@@ -103,9 +99,8 @@
     <!-- Password Form (Collapsed by Default) -->
     <div [ngClass]="{'password-form': true, 'visible': isPasswordChangeVisible}">
       <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
-        <!-- Success or Error Messages -->
-        <div *ngIf="successMessagePassword" class="alert alert-success mb-4 text-green-600">{{ successMessagePassword }}</div>
-        <div *ngIf="errorMessagePassword" class="alert alert-danger mb-4 text-red-600">{{ errorMessagePassword }}</div>
+        <!-- Success or Error Messages (Inside Password Change Form) -->
+
 
         <!-- Password Fields -->
         <div class="mb-3">
@@ -131,32 +126,17 @@
       </form>
     </div>
   </div>
-  <div class="content-center align-items-center bg-light">
-    <!-- Other forms like profile update and password change -->
 
-    <!-- Toggle for Delete Account Section -->
-    <div class="card p-4 shadow rounded-4 mb-4" style="width: 450px; border: none;">
-      <div class="text-center mb-4">
-        <h3 class="text-primary fw-bold">Delete Account</h3>
-        <p class="text-muted small">Are you sure you want to delete your account?</p>
-      </div>
-
-      <!-- Toggle Button -->
-      <button class="btn btn-outline-danger w-100 rounded-pill py-2 mb-3" (click)="toggleDeleteAccount()">
-        <i class="fas fa-trash-alt mr-2"></i> Delete Account
-      </button>
-
-      <!-- Delete Account Confirmation Form (Collapsed by Default) -->
-      <div *ngIf="isDeleteAccountVisible" class="text-center">
-        <p class="text-danger">Warning: This action is irreversible!</p>
-        <button class="btn btn-danger w-100 py-2 rounded-pill mt-3" (click)="onDeleteAccount()">
-          <i class="fas fa-trash mr-2"></i> Confirm Delete
-        </button>
-        <button class="btn btn-secondary w-100 py-2 rounded-pill mt-2" (click)="toggleDeleteAccount()">
-          Cancel
-        </button>
-      </div>
+  <!-- Third Container (Delete Account) -->
+  <div class="card p-4 shadow rounded-4 mb-4" style="width: 450px; border: none;">
+    <div class="text-center mb-4">
+      <h3 class="text-primary fw-bold">Delete Account</h3>
+      <p class="text-muted small">Are you sure you want to delete your account?</p>
     </div>
-  </div>
 
+    <!-- Toggle Button -->
+    <button class="btn btn-outline-danger w-100 rounded-pill py-2 mb-3" (click)="onDeleteAccount()">
+      <i class="fas fa-trash-alt mr-2"></i> Delete Account
+    </button>
+  </div>
 </div>

@@ -1,51 +1,53 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true, // Ensure it's standalone
-  imports: [CommonModule, RouterModule], // Add RouterModule here
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   username: string = '';
-  userId: number | null = null; // Correctly declare userId
+  userId: number | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
-  ngOnInit() {
-    // Subscribe to login state
-    this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-    });
+ ngOnInit(): void {
+  this.authService.isLoggedIn$.subscribe((isLoggedIn) => {
+    this.isLoggedIn = isLoggedIn;
+  });
 
-    // Subscribe to admin state
-    this.authService.isAdmin$.subscribe((isAdmin) => {
-      this.isAdmin = isAdmin;
-    });
+  this.authService.isAdmin$.subscribe((isAdmin) => {
+    this.isAdmin = isAdmin;
+  });
 
-    // Subscribe to username
-    this.authService.username$.subscribe((username) => {
-      this.username = username;
-    });
+  this.authService.username$.subscribe((username) => {
+    this.username = username || '';  // Ensure it's a valid value
+  });
 
-    // Subscribe to userId
-    this.authService.userId$.subscribe((userId) => {
-      this.userId = userId;
-      console.log('User ID in Navbar:', this.userId); // Debug log
-    });
-  }
+  this.authService.userId$.subscribe((userId) => {
+    this.userId = userId;
+  });
+}
 
-  logout() {
+
+  // Logout function to clear session and redirect to home page
+  logout(): void {
     this.authService.logout();
-    this.router.navigate(['/']); // Redirect to home page
+    this.router.navigate(['/']); // Redirect to home page after logging out
   }
 
+  // Navigate to profile page with userId
   onNavigateToProfile(): void {
     if (this.userId) {
       this.router.navigate(['/profile', this.userId]); // Navigate to profile with userId

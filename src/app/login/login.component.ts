@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
     private http: HttpClient // Added HttpClient for Basic Auth
   ) {}
 
-  onSubmit() {
+
+onSubmit() {
   this.emailError = '';
   this.passwordError = '';
   this.errorMessage = '';
@@ -69,12 +71,21 @@ export class LoginComponent {
       // Update AuthService state and session
       this.authService.setUserDetails(user);  // Store details, including password
 
-      // Redirect to the homepage or dashboard after successful login
-      this.router.navigate(['/']);
+      // Show success alert using SweetAlert2
+      Swal.fire({
+        title: 'Login Successful!',
+        text: `Welcome back, ${response.fullName}! You have logged in successfully.`,
+        icon: 'success',
+        confirmButtonText: 'OK',
+        timer: 3000  // Auto-close the alert after 3 seconds
+      }).then(() => {
+        // Redirect to the homepage or dashboard after the alert
+        this.router.navigate(['/']);
+      });
     },
     (error) => {
       console.error('Login failed', error);
       this.errorMessage = 'Invalid email or password.';
     }
   );
-  }}
+}}

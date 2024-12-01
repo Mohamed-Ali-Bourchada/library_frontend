@@ -51,3 +51,4 @@
   visibility: visible;
   /* Ensure the form remains in the DOM but hidden when collapsed */
 }
+/* Ensure the toast is positioned and styled correctly */
