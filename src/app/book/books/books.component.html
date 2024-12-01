@@ -1,5 +1,5 @@
 
-<div class="categories-section" id="catalog">
+<!-- <div class="categories-section" id="catalog">
   <h2 class="categories-title">Our Book Collection</h2>
   <div class="categories-grid">
     <div class="category-item" *ngFor="let book of books">
@@ -14,7 +14,7 @@
       </div>
     </div>  
   </div>
-</div>
+</div> -->
 <!-- pour la cathegorie  -->
 <div class="cathegorie_Filter_Container">
   <div 
@@ -46,7 +46,7 @@
 <!-- carousel  -->
 <swiper-container loop="true" navigation="true" slides-per-view="2">
   <swiper-slide *ngFor="let book of books">
-    <div class="category-item"  (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <div class="category-item"  (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#bookModal">
       <div class="category-card">
         <img 
         [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'" 
@@ -69,19 +69,50 @@
   <div class="btn btn-outline-info ">show all</div>
  </div>
 <!-- model  -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- Modal pour afficher les informations du livre -->
+<!-- Modal pour afficher les informations du livre -->
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{BookDetails.title}}</h5>
+        <h5 class="modal-title" id="bookModalLabel">{{ BookDetails?.title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="d-flex">
+          <!-- Image on the left -->
+          <div class="image-container me-4">
+            <img [src]="BookDetails?.cover ? 'data:image/jpeg;base64,' + BookDetails.cover : 'assets/images/default-cover.jpg'"
+                 alt="{{ BookDetails?.title }}"
+                 class="img-fluid rounded-3 shadow-lg">
+          </div>
+
+          <!-- Book Details on the right -->
+          <div class="book-details">
+            <div class="mb-3">
+              <label for="bookTitle" class="form-label">Titre</label>
+              <h4 class="book-info">{{ BookDetails?.title }}</h4>
+            </div>
+
+            <div class="mb-3">
+              <label for="bookAuthor" class="form-label">Auteur</label>
+              <p class="book-info">{{ BookDetails?.author }}</p>
+            </div>
+
+            <div class="mb-3">
+              <label for="bookSujet" class="form-label">Sujet</label>
+              <p class="book-info">{{ BookDetails?.sujet }}</p>
+            </div>
+            <div class="mb-3">
+              <span [class]="BookDetails.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ BookDetails.stateBook || 'Available' }}</span>
+
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary">Emprunter</button>
       </div>
     </div>
   </div>
