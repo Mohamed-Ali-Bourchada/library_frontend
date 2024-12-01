@@ -1,79 +1,99 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { HttpClient } from '@angular/common/http'; // Add HttpClient for API calls
-import { Router } from '@angular/router'; // Add Router to redirect after successful signup
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule], // Add CommonModule here
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
   signUpForm: FormGroup;
-  errorMessage: string = ''; // To display error message
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,  // Inject HttpClient for sending POST request
-    private router: Router     // Inject Router to redirect after successful signup
+    private http: HttpClient,
+    private router: Router
   ) {
-    // Form group with custom validator for password matching
     this.signUpForm = this.fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      adresse: ['', [Validators.required]], // New Address field
-      dateNaiss: ['', [Validators.required]], // New Date of Birth field
-      telephone: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/)]], // Allow international phone numbers
-
+      adresse: ['', [Validators.required]],
+      dateNaiss: ['', [Validators.required]],
+      telephone: ['', [Validators.required, Validators.pattern(/^\+\d{1,15}$/)]],
     }, {
       validators: this.passwordMatchValidator
     });
   }
 
-  // Custom validator to check if password and confirmPassword match
   passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
     return password === confirmPassword ? null : { 'mismatch': true };
   }
 
-  // Submit the sign-up form
- onSignUpSubmit() {
-  if (this.signUpForm.valid) {
-    const user = this.signUpForm.value;
+  onSignUpSubmit() {
+    if (this.signUpForm.valid) {
+      const user = this.signUpForm.value;
 
-    // Log the user object before sending it
-    console.log('User object being sent to API:', user);
+      console.log('User object being sent to API:', user);
 
-    // Make API call to register the user
-    this.http.post('http://localhost:8081/api/users/register', user, {
-      headers: { 'Content-Type': 'application/json' }
-    }).subscribe(
-      (response) => {
-        console.log('Sign Up successful', response);
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        console.error('Full error object:', error);
-        if (error.status === 400) {
-          this.errorMessage = 'Email already exists. Please use a different email address.';
-        } else {
-          this.errorMessage = 'Sign Up failed: ' + (error.error.message || error.statusText);
+      this.http.post('http://localhost:8081/api/users/register', user, {
+        headers: { 'Content-Type': 'application/json' }
+      }).subscribe(
+        (response) => {
+          console.log('Sign Up successful', response);
+
+          // Trigger SweetAlert for success
+          Swal.fire({
+            title: 'Sign Up Successful!',
+            text: 'Your account has been created successfully. You will be redirected to the login page.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.router.navigate(['/login']); // Redirect to login page
+          });
+        },
+        (error) => {
+          console.error('Full error object:', error);
+
+          // Trigger SweetAlert for error
+          if (error.status === 400) {
+            Swal.fire({
+              title: 'Sign Up Failed!',
+              text: 'Email already exists. Please use a different email address.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          } else {
+            Swal.fire({
+              title: 'Sign Up Failed!',
+              text: 'An error occurred: ' + (error.error.message || error.statusText),
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         }
-      }
-    );
-  } else {
-    this.errorMessage = 'Form is invalid!';
+      );
+    } else {
+      // Trigger SweetAlert for invalid form
+      Swal.fire({
+        title: 'Invalid Form',
+        text: 'Please fill out all required fields correctly.',
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+    }
   }
-}
 
-
-  // Getter for easy access to form controls in the template
   get f() {
     return this.signUpForm.controls;
   }
