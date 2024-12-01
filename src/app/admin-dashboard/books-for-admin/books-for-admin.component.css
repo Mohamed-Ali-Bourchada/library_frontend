@@ -4,3 +4,22 @@
     text-overflow: ellipsis;      /* Ajoute des points de suspension à la fin du texte coupé */
     max-width: 200px;             /* Définissez une largeur maximale pour la cellule, ajustez-la selon votre besoin */
   }
+
+
+
+  /* image */
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .category-image {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .category-image:hover {
+    transform: scale(1.5); /* Agrandit l'image */
+    z-index: 10; /* Place l'image au-dessus des autres */
+  }
+  
