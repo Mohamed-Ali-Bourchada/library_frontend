@@ -1,0 +1,79 @@
+footer {
+  opacity: 0;
+  transform: translateY(20px);
+  /* Slightly offset the footer */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  background-color: #222;
+  /* Dark background for elegance */
+}
+
+footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-bottom {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  /* Muted text color */
+  text-align: center;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+footer a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #ffcc00;
+  /* Highlight color on hover */
+}
+
+
+ul.list-unstyled {
+  padding: 0;
+  list-style: none;
+}
+
+footer .btn {
+  background-color: #ffcc00;
+  /* Button color */
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+footer .btn:hover {
+  background-color: #e6b800;
+  /* Darker shade on hover */
+}
+
+/* Fix for social media icon spacing */
+footer .social-icons a {
+  margin-right: 15px;
+  display: inline-block;
+}
+.social-icons i{
+  font-size: 2em;
+}
+footer .social-icons img {
+  width: 25px;
+  /* Adjusted icon size for consistency */
+}

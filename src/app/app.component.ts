@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BooksComponent } from './book/books/books.component'; // Ajout du composant BooksComponent
 import { RouterOutlet, RouterModule } from '@angular/router';
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { RouterOutlet, RouterModule } from '@angular/router';
   imports: [
     RouterModule,
     RouterOutlet,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
 ],  // Add RouterModule here
 
   templateUrl: './app.component.html',
