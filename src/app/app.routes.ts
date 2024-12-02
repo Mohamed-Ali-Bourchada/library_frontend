@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BooksForAdminComponent } from './admin-dashboard/books-for-admin/books-for-admin.component';
 import { UsersForAdminComponent } from './admin-dashboard/users-for-admin/users-for-admin.component';
 import { CreateBookComponent } from './admin-dashboard/create-book/create-book.component';
+import { HistoriqueComponent } from './historique/historique/historique.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },            // Default route for home
@@ -16,7 +17,8 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'sign-up', component: SignUpComponent },
-{ path: 'profile/:id', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  {path:'historique/:id',component:HistoriqueComponent},
   { path: 'admin-dashboard', 
     component: AdminDashboardComponent ,
   children:[

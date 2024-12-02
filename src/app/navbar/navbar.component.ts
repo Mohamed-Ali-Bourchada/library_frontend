@@ -55,4 +55,11 @@ export class NavbarComponent implements OnInit {
       console.error('User ID is not available.');
     }
   }
+  onNavigateToHistorique():void{
+    if(this.userId){
+    this.router.navigate(['/historique',this.userId])//voir leur historique 
+  } else {
+    console.error('User ID is not available.');
+  }
+}
 }

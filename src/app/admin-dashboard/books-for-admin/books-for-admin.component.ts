@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BookservicesService } from '../../services/bookServices/bookservices.service';
-
+import { EmpruntServicesService } from '../../services/empruntService/emprunt-services.service';
 import * as bootstrap from 'bootstrap';
-
+import {Modal} from 'bootstrap';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms'; 
 @Component({
   selector: 'app-books-for-admin',
   standalone:true,
@@ -29,11 +29,10 @@ export class BooksForAdminComponent implements OnInit{
     'educative']; 
   constructor(
     private bookService:BookservicesService,
-    private fb:FormBuilder
+    private emprunteService:EmpruntServicesService,
+    
   ) {}
-  // get f() {
-  //   return this.bookForUpdate.controls;
-  // }
+  
   getAllBooks(){
     this.bookService.GetAllBooks().subscribe({
       next:(data)=>{
@@ -116,6 +115,59 @@ export class BooksForAdminComponent implements OnInit{
       const bootstrapModal = new bootstrap.Modal(modalElement);
       bootstrapModal.show();
     }
+  }
+  unavailableBook: any = null; // Stocker le livre indisponible
+
+
+  openUnavailableModal(book: any) {
+    console.log('Book reçu:', book);
+    console.log('Book reçu:', book.id);
+
+    if (book.stateBook === 'indisponible') {
+       this.emprunteService.getEmpruntesForBook(book.id).subscribe({
+        //this.http.get('http://localhost:8081/api/empreunt/getBook/3').subscribe({
+        next:(response)=>{
+          this.unavailableBook = response[0];
+          console.log(" unavailableBook:",this.unavailableBook);
+          console.log(" titre:",response[0].user.fullName);
+          
+        },
+        error:(error)=>{
+          console.error(error);
+          
+        }
+      })
+
+       // Stocker les détails du livre
+    }
+  }
+  // Fonction pour comparer la date actuelle avec la date de retour prévue
+  isDateRetourBeforeNow(dateRetourPrevu: string | null): boolean {
+    if (!dateRetourPrevu) return true; // Par défaut, pas d'erreur si aucune date fournie
+    const today = new Date();
+    const retourDate = new Date(dateRetourPrevu);
+    return retourDate >= today; // Retourne true si la date de retour est dans le futur
+  }
+  setRetourBook(empruentId:number):void
+  {
+    this.emprunteService.setBookRetour(empruentId).subscribe({
+      next:()=>{
+        const modalElement = document.getElementById('unavailableModal');
+        if (modalElement) {
+          const modalInstance = new Modal(modalElement); // Créer une instance du modal
+          modalInstance.hide(); // Fermer le modal
+        }
+      
+        console.log("test");
+        },
+
+      
+      error:(error)=>{
+        console.error(error);
+        
+      }
+    })
+
   }
   
 }
