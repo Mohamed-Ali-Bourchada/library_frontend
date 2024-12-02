@@ -1,89 +1,69 @@
-<div class="d-flex justify-content-center align-items-center vh-100 bg-light custom-container">
-    <div class="card p-4 shadow rounded-4" style="width: 700px; border: none;">
-      <div class="text-center mb-4">
-        <h3 class="text-primary fw-bold">Ajouter un Livre</h3>
-        <p class="text-muted small">Entrez les informations du livre</p>
-      </div>
-      <form [formGroup]="createBookForm" (ngSubmit)="onSubmit()" class="needs-validation">
-        <!-- Title and Author Fields -->
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="title" class="form-label fw-semibold">Titre</label>
-            <input
-              id="title"
-              type="text"
-              formControlName="title"
-              class="form-control rounded-pill"
-              placeholder="Titre du livre"
-            />
-            <div *ngIf="f['title'].touched && f['title'].invalid" class="text-danger small mt-1">
-              {{ f['title'].errors?.['required'] ? 'Le titre est requis.' : '' }}
-            </div>
-          </div>
-  
-          <div class="col-md-6 mb-3">
-            <label for="author" class="form-label fw-semibold">Auteur</label>
-            <input
-              id="author"
-              type="text"
-              formControlName="author"
-              class="form-control rounded-pill"
-              placeholder="Auteur du livre"
-            />
-            <div *ngIf="f['author'].touched && f['author'].invalid" class="text-danger small mt-1">
-              {{ f['author'].errors?.['required'] ? 'L\'auteur est requis.' : '' }}
-            </div>
-          </div>
-        </div>
-  
-        <!-- Subject and Category Fields -->
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <label for="sujet" class="form-label fw-semibold">Sujet</label>
-            <input
-              id="sujet"
-              type="text"
-              formControlName="sujet"
-              class="form-control rounded-pill"
-              placeholder="Sujet du livre"
-            />
-            <div *ngIf="f['sujet'].touched && f['sujet'].invalid" class="text-danger small mt-1">
-              {{ f['sujet'].errors?.['required'] ? 'Le sujet est requis.' : '' }}
-            </div>
-          </div>
-  
-          <div class="col-md-6 mb-3">
-            <label for="category" class="form-label fw-semibold">Catégorie</label>
-            <select id="category" formControlName="category" class="form-control rounded-pill">
-              <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-            </select>
-            <div *ngIf="f['category'].touched && f['category'].invalid" class="text-danger small mt-1">
-              {{ f['category'].errors?.['required'] ? 'La catégorie est requise.' : '' }}
-            </div>
-          </div>
-        </div>
-  
-        <!-- Cover Image Upload Field -->
-        <!-- Upload de l'image de couverture -->
-<div class="mb-3">
-    <label for="cover" class="form-label fw-semibold">Image de couverture</label>
-    <input id="cover" type="file" (change)="onFileSelected($event)" class="form-control rounded-pill" />
-    
-  </div>
-  
-  
-        <!-- General Error Message -->
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3 rounded-pill text-center">
-          {{ errorMessage }}
-        </div>
-  
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-3" [disabled]="createBookForm.invalid || !coverFile">
-            Ajouter le Livre
-          </button>
-          
-      
-      </form>
+<div class="d-flex justify-content-center align-items-center bg-light custom-container">
+  <div class="card p-4 shadow rounded-4">
+    <div class="text-center mb-4">
+      <h3 class="text-primary fw-bold">Ajouter un Livre</h3>
+      <p class="text-muted small">Entrez les informations du livre</p>
     </div>
+    <form [formGroup]="createBookForm" (ngSubmit)="onSubmit()" class="needs-validation">
+      <!-- Title and Author Fields -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="title" class="form-label fw-semibold">Titre</label>
+          <input id="title" type="text" formControlName="title" class="form-control rounded-pill"
+            placeholder="Titre du livre" />
+          <div *ngIf="f['title'].touched && f['title'].invalid" class="text-danger small mt-1">
+            {{ f['title'].errors?.['required'] ? 'Le titre est requis.' : '' }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="author" class="form-label fw-semibold">Auteur</label>
+          <input id="author" type="text" formControlName="author" class="form-control rounded-pill"
+            placeholder="Auteur du livre" />
+          <div *ngIf="f['author'].touched && f['author'].invalid" class="text-danger small mt-1">
+            {{ f['author'].errors?.['required'] ? 'L\'auteur est requis.' : '' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Subject and Category Fields -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="sujet" class="form-label fw-semibold">Sujet</label>
+          <input id="sujet" type="text" formControlName="sujet" class="form-control rounded-pill"
+            placeholder="Sujet du livre" />
+          <div *ngIf="f['sujet'].touched && f['sujet'].invalid" class="text-danger small mt-1">
+            {{ f['sujet'].errors?.['required'] ? 'Le sujet est requis.' : '' }}
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="category" class="form-label fw-semibold">Catégorie</label>
+          <select id="category" formControlName="category" class="form-control rounded-pill">
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+          <div *ngIf="f['category'].touched && f['category'].invalid" class="text-danger small mt-1">
+            {{ f['category'].errors?.['required'] ? 'La catégorie est requise.' : '' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Cover Image Upload Field -->
+      <div class="mb-3">
+        <label for="cover" class="form-label fw-semibold">Image de couverture</label>
+        <input id="cover" type="file" (change)="onFileSelected($event)" class="form-control rounded-pill" />
+      </div>
+
+      <!-- General Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-3 rounded-pill text-center">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill mt-3"
+        [disabled]="createBookForm.invalid || !coverFile">
+        Ajouter le Livre
+      </button>
+    </form>
   </div>
-  
+</div>

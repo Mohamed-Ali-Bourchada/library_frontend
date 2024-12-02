@@ -24,118 +24,130 @@
             <!-- (click)="searchBooks()" -->
         </div>
       </div>
+<button type="button" class="btn btn-danger" (click)="deleteSelectedBooks()">Supprimer les livres sélectionnés</button>
 
 
     <!-- Tableau des livres -->
-    <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>cover</th>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Disponibilité</th>
-            <th>Category</th>
-            <th>Sujet</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let book of books">
-            <td>
-              <div class="image-container">
-                <!-- Image avec agrandissement au survol -->
-                <img
-                  [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'"
-                  alt="{{ book.title }}"
-                  class="category-image"
-                  style="height: 50px; width: 70px;"
-                  (click)="openCoverModal(book)">
-              </div>
-            </td>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
+<table class="table table-striped">
 
+  <thead>
+    <tr>
+      <th>
+        <!-- Checkbox to select all books -->
+        <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+      </th>
+      <th>Cover</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Disponibilité</th>
+      <th>Category</th>
+      <th>Sujet</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books">
+      <td>
+        <input type="checkbox" [(ngModel)]="book.selected" />
+      </td>
+      <td>
+        <div class="image-container">
+          <img [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'"
+            alt="{{ book.title }}" class="category-image" style="height: 50px; width: 70px;"
+            (click)="openCoverModal(book)">
+        </div>
+      </td>
+      <td>{{ book.title }}</td>
+      <td>{{ book.author }}</td>
+      <td>
+        <span [class]="book.stateBook == 'disponible' ? 'badge bg-success' : 'badge bg-danger'"
+          (click)="openUnavailableModal(book)">
+          {{ book.stateBook || 'Available' }}
+        </span>
+      </td>
+      <td>{{ book.category }}</td>
+      <td class="sujet">{{ book.sujet }}</td>
+      <td>
+        <div class="btn btn-warning m-1" (click)="openModal(book)" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+          Modifier
+        </div>
+        <!-- Remove individual delete button, because now the delete will be bulk -->
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-            <td>
-              <!-- Badge avec logique de clic -->
-              <span
-                [class]="book.stateBook == 'disponible' ? 'badge bg-success' : 'badge bg-danger'"
-                (click)="openUnavailableModal(book)"
-                [ngClass]="{'clickable': book.stateBook == 'indisponible'}"
-                [attr.data-bs-toggle]="book.stateBook == 'indisponible' ? 'modal' : null"
-                [attr.data-bs-target]="book.stateBook == 'indisponible' ? '#unavailableModal' : null">
-                {{ book.stateBook || 'Available' }}
-              </span>
-            </td>
+<!-- Button to trigger delete for selected books -->
 
-
-            <td>{{ book.category }}</td>
-            <td class="sujet">{{ book.sujet }}</td>
-            <td>
-              <div class="btn btn-warning m-1" (click)="openModal(book)" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Modifier
-              </div>
-              <div class="btn btn-danger m-1" (click)="deleteBook(book.id)">
-                Supprimer
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
 <!-- Modal Update Book-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header" style="background-color: #007bff; color: white;">
-          <h5 class="modal-title" id="exampleModalLabel">Modifier les informations du livre</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col">
-              <form>
-                <!-- Titre -->
-                <div class="mb-3">
-                  <label for="bookTitle" class="form-label">Titre</label>
-                  <input type="text" id="bookTitle" [(ngModel)]="selectedBook.title" name="title" class="form-control" placeholder="Entrez le titre du livre">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #007bff; color: white;">
+        <h5 class="modal-title" id="exampleModalLabel">Modifier les informations du livre</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <form>
+              <!-- Titre -->
+              <div class="mb-3">
+                <label for="bookTitle" class="form-label">Titre</label>
+                <input type="text" id="bookTitle" [(ngModel)]="selectedBook.title" name="title" class="form-control"
+                  placeholder="Entrez le titre du livre" (ngModelChange)="validateBookFields()" />
+                <div *ngIf="validationErrors.title" class="text-danger mt-1">
+                  {{ validationErrors.title }}
                 </div>
+              </div>
 
-                <!-- Auteur -->
-                <div class="mb-3">
-                  <label for="bookAuthor" class="form-label">Auteur</label>
-                  <input type="text" id="bookAuthor" [(ngModel)]="selectedBook.author" name="author" class="form-control" placeholder="Entrez l'auteur du livre">
+              <!-- Auteur -->
+              <div class="mb-3">
+                <label for="bookAuthor" class="form-label">Auteur</label>
+                <input type="text" id="bookAuthor" [(ngModel)]="selectedBook.author" name="author" class="form-control"
+                  placeholder="Entrez l'auteur du livre" (ngModelChange)="validateBookFields()" />
+                <div *ngIf="validationErrors.author" class="text-danger mt-1">
+                  {{ validationErrors.author }}
                 </div>
+              </div>
 
-                <!-- Catégorie -->
+              <!-- Catégorie -->
+              <div class="mb-3">
+                <label for="bookCategory" class="form-label">Catégorie</label>
+                <select id="bookCategory" [(ngModel)]="selectedBook.category" name="category" class="form-control"
+                  (ngModelChange)="validateBookFields()">
+                  <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+                </select>
+                <div *ngIf="validationErrors.category" class="text-danger mt-1">
+                  {{ validationErrors.category }}
+                </div>
+              </div>
 
-                <div class="mb-3">
-                  <label for="bookCategory" class="form-label">Catégorie</label>
-                  <select id="bookCategory" [(ngModel)]="selectedBook.category" name="category" class="form-control">
-                    <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-                  </select>
+              <!-- Sujet -->
+              <div class="mb-3">
+                <label for="bookSujet" class="form-label">Sujet</label>
+                <textarea id="bookSujet" [(ngModel)]="selectedBook.sujet" name="sujet" class="form-control" rows="3"
+                  placeholder="Entrez le sujet du livre" (ngModelChange)="validateBookFields()"></textarea>
+                <div *ngIf="validationErrors.sujet" class="text-danger mt-1">
+                  {{ validationErrors.sujet }}
                 </div>
-                <!-- sujet -->
-                <div class="mb-3">
-                  <label for="bookSujet" class="form-label">Sujet</label>
-                  <textarea id="bookSujet" [(ngModel)]="selectedBook.sujet" name="sujet" class="form-control" rows="3" placeholder="Entrez le sujet du livre"></textarea>
-                </div>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-          <button
-          type="button"
-          class="btn btn-primary"
-          (click)="saveChanges()"
-          data-bs-dismiss="modal">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">
           Enregistrer les modifications
-        </button>        </div>
+        </button>
       </div>
     </div>
   </div>
+</div>
+
 
 <!-- Modal Update Cover -->
 <div class="modal fade" id="coverModal" tabindex="-1" aria-labelledby="coverModalLabel" aria-hidden="true">

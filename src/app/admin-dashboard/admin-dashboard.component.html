@@ -1,32 +1,30 @@
-<div class="container mt-4">
-    <!-- Barre de navigation -->
-    <nav class="nav nav-pills mb-4">
-      <a 
-        class="nav-link" 
-        routerLink="/admin-dashboard/booksForAdmin" 
-        routerLinkActive="active"
-      >
-        Books
-      </a>
-      <a 
-        class="nav-link" 
-        routerLink="/admin-dashboard/usersForAdmin" 
-        routerLinkActive="active"
-      >
-        Users
-      </a>
-      <a 
-        class="nav-link" 
-        routerLink="/admin-dashboard/createBook" 
-        routerLinkActive="active"
-      >
-        Create Book
-      </a>
-    </nav>
-  
-    <!-- Zone dynamique pour le contenu -->
-    <div class="content">
-      <router-outlet></router-outlet>
+<div class="container mt-20">
+  <!-- Barre de navigation -->
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <a class="navbar-brand">Admin Dashboard</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin-dashboard/booksForAdmin" routerLinkActive="active">
+            Books
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin-dashboard/usersForAdmin" routerLinkActive="active">
+            Users
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin-dashboard/createBook" routerLinkActive="active">
+            Create Book
+          </a>
+        </li>
+      </ul>
     </div>
+  </nav>
+
+  <!-- Zone dynamique pour le contenu -->
+  <div class="content">
+    <router-outlet></router-outlet>
   </div>
-  
+</div>
