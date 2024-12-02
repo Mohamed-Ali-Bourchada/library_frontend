@@ -16,6 +16,17 @@ export class BookservicesService {
    {
     return this.http.get<Array<any>>(this.apiUrl)
    }
+   public getBookByTitle(title:string):Observable<Array<any>>{
+    return this.http.get<Array<any>>(`${this.apiUrl}${title}`)
+   }
+   public getBooksByCategories(categorie:string):Observable<Array<any>>{
+    const url=`${this.apiUrl}getBooksByCategorie/${categorie}`
+    return this.http.get<Array<any>>(url)
+   }
+   public getBooksByState(stateBook:string):Observable<Array<any>>{
+    const url=`${this.apiUrl}getBooksByState/${stateBook}`
+    return this.http.get<Array<any>>(url)
+   }
    createBook(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}createBook`, formData);
   }

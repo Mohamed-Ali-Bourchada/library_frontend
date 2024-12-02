@@ -21,7 +21,17 @@ export class BooksComponent {
     sujet:"educatif for rich",
    category:"educatif"
    }
+   categories = [
+    'romantique',
+    'drole',
+    'fantastique',
+    'historique',
+    'educatif',
+    'aventure',
+    'educative'];
+
   books: Array<any> = [];
+  
 
   constructor(private bookservicesService: BookservicesService) {}
 
@@ -36,12 +46,20 @@ export class BooksComponent {
   ngOnInit() {
     this.getAllBooks();
   }
+  
+  bookByCategorie(category: string){
+    this.bookservicesService.getBooksByCategories(category).subscribe({
+      next:(data)=>{
+        this.books=data
+      }
+    })
+  }
   filterBooks(category: string) {
     this.selectedCategory = category;
     if (category === 'all') {
       this.getAllBooks();
     } else {
-      this.books = this.books.filter(book => book.category === category);
+      this.bookByCategorie(category);
     }
   }
   showBookDetails(book:any){

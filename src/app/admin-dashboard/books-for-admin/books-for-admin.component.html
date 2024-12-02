@@ -3,25 +3,25 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <!-- Section des filtres -->
         <div>
-          <button class="btn btn-outline-primary me-2">All</button>
-          <button class="btn btn-outline-success me-2">Disponible</button>
-          <button class="btn btn-outline-danger">Non Disponibles</button>
+          <button class="btn btn-outline-primary me-2" (click)="ngOnInit()">All</button>
+          <button class="btn btn-outline-success me-2"(click)="getBookByState('disponible')" >Disponible</button>
+          <button class="btn btn-outline-danger" (click)="getBookByState('indisponible')" >Non Disponibles</button>
         </div>
 
         <!-- Section de recherche alignée à droite -->
         <div class="d-flex align-items-center">
           <input
             type="text"
+            required="required"
             class="form-control w-50 me-2"
-            placeholder="Rechercher un livre..."
-              >
-              <!-- [(ngModel)]="searchTerm" -->
-              <!-- Liens bidirectionnels pour la recherche -->
-
+            placeholder="taper le Titre ..."
+            [(ngModel)]="titreAchercher"
+            (keyup.enter)="searchBooks()">
+              
           <button
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary"(click)="searchBooks()"
             >Rechercher</button>
-            <!-- (click)="searchBooks()" -->
+            
         </div>
       </div>
 <button type="button" class="btn btn-danger" (click)="deleteSelectedBooks()">Supprimer les livres sélectionnés</button>
