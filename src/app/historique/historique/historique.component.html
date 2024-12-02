@@ -1,33 +1,28 @@
 <table class="table table-striped mt-20">
     <thead>
       <tr>
+        
         <th>Titre</th>
         <th>Auteur</th>
         <th>Catégorie</th>
         <th>Date d'Emprunt</th>
+        <th>Date Retour prevu</th>
         <th>Date Retour Effective</th>
-        <th>Action</th>
+        
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let historique of historiques">
-        <td>{{ historique.book?.title }}</td>
-        <td>{{ historique.book?.author }}</td>
-        <td>{{ historique.book?.category }}</td>
+        <td>{{ historique.book.title }}</td>
+        <td>{{ historique.book.author }}</td>
+        <td>{{ historique.book.category }}</td>
         <td>{{ historique.dateEmprunt }}</td>
         <!-- <td>{{ historique.dateEmprunt | date: 'shortDate' }}</td> -->
-
-        <td>
-          <!-- {{ historique.dateRetourEffectif ? (historique.dateRetourEffectif | date: 'shortDate') : 'Non retourné' }} -->
+        <td>{{historique.dateRoutourPrevu}}</td>
+        <td [ngClass]="{'text-danger': !historique.dateRetourEffectif}">
+          {{ historique.dateRetourEffectif ? historique.dateRetourEffectif : "n'est pas encore retourné" }}
         </td>
-        <td>
-          <div class="btn btn-warning m-1" data-bs-toggle="modal" data-bs-target="#editEmpruntModal">
-            Modifier
-          </div>
-          <div class="btn btn-danger m-1" >
-            Supprimer
-          </div>
-        </td>
+        
       </tr>
     </tbody>
   </table>

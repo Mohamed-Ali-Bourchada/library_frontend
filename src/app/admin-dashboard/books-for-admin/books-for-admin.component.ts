@@ -28,6 +28,7 @@ export class BooksForAdminComponent implements OnInit{
     'educatif',
     'aventure',
     'educative'];
+    
   constructor(
     private bookService:BookservicesService,
     private emprunteService:EmpruntServicesService,
@@ -36,6 +37,40 @@ export class BooksForAdminComponent implements OnInit{
 
   getAllBooks(){
     this.bookService.GetAllBooks().subscribe({
+      next:(data)=>{
+        this.books=data
+      },
+      error: (err) => {
+        console.error("Erreur lors de l'importer des livre", err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: "Erreur lors de l'importer des livre.",
+        });
+      }
+    })
+  }
+  titreAchercher:string='';
+  searchBooks(){
+    if(this.titreAchercher){
+      this.bookService.getBookByTitle(this.titreAchercher).subscribe({
+        next:(data)=>{
+          this.books=data;
+          this.titreAchercher=""
+        },
+        error: (err) => {
+          console.error('Erreur lors de la recherche du livre', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la recherche du livre.',
+          });
+        }
+      })
+    }
+  }
+  getBookByState(stateBooks:string ){
+    this.bookService.getBooksByState(stateBooks).subscribe({
       next:(data)=>{
         this.books=data
       }
@@ -69,7 +104,7 @@ deleteBook(id: number): void {
               timer: 2000,
               showConfirmButton: false
             });
-            this.getAllBooks(); // Refresh the book list
+            this.ngOnInit(); // Refresh the book list
           }
         },
         error: (err) => {

@@ -25,21 +25,39 @@
   </div>
   <div
     class="cathegorie_Filter_items"
-    [class.active]="selectedCategory === 'romantique'"
-    (click)="filterBooks('romantique')">
-    <h4>romantique</h4>
+    [class.active]="selectedCategory === categories[0]"
+    (click)="filterBooks(categories[0])">
+    <h4>{{categories[0]}} </h4>
   </div>
   <div
     class="cathegorie_Filter_items"
-    [class.active]="selectedCategory === 'drole'"
-    (click)="filterBooks('drole')">
-    <h4>drole</h4>
+    [class.active]="selectedCategory === categories[1]"
+    (click)="filterBooks(categories[1])">
+    <h4>{{categories[1]}}</h4>
   </div>
   <div
     class="cathegorie_Filter_items"
-    [class.active]="selectedCategory === 'dangereux'"
-    (click)="filterBooks('dangereux')">
-    <h4>dangereux</h4>
+    [class.active]="selectedCategory === categories[2]"
+    (click)="filterBooks(categories[2])">
+    <h4>{{categories[2]}}</h4>
+  </div>
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === categories[3]"
+    (click)="filterBooks(categories[3])">
+    <h4>{{categories[3]}}</h4>
+  </div>
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === categories[4]"
+    (click)="filterBooks(categories[4])">
+    <h4>{{categories[4]}}</h4>
+  </div>
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === categories[5]"
+    (click)="filterBooks(categories[5])">
+    <h4>{{categories[5]}}</h4>
   </div>
 </div>
 
