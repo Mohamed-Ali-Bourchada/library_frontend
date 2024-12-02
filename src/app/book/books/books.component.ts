@@ -7,7 +7,7 @@ import { BookservicesService } from '../../services/bookServices/bookservices.se
   selector: 'app-books',
   standalone: true,
   imports: [CommonModule,
-  
+
   ],  // Add CommonModule here
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css'],
@@ -18,7 +18,7 @@ export class BooksComponent {
   BookDetails:any={
     title:"rich dad",
     author:"thomas",
-    sujet:"educatif for rich", 
+    sujet:"educatif for rich",
    category:"educatif"
    }
   books: Array<any> = [];
@@ -39,9 +39,9 @@ export class BooksComponent {
   filterBooks(category: string) {
     this.selectedCategory = category;
     if (category === 'all') {
-      this.getAllBooks(); 
+      this.getAllBooks();
     } else {
-      this.books = this.books.filter(book => book.category === category); 
+      this.books = this.books.filter(book => book.category === category);
     }
   }
   showBookDetails(book:any){

@@ -5,7 +5,8 @@ import { EmpruntServicesService } from '../../services/empruntService/emprunt-se
 import * as bootstrap from 'bootstrap';
 import {Modal} from 'bootstrap';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-books-for-admin',
   standalone:true,
@@ -15,8 +16,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class BooksForAdminComponent implements OnInit{
   books :Array<any>=[];
-  
-  
+
+
   selectedBook: any = {};  // Pour stocker les informations du livre sélectionné
 
   categories = [
@@ -26,13 +27,13 @@ export class BooksForAdminComponent implements OnInit{
     'historique',
     'educatif',
     'aventure',
-    'educative']; 
+    'educative'];
   constructor(
     private bookService:BookservicesService,
     private emprunteService:EmpruntServicesService,
-    
+
   ) {}
-  
+
   getAllBooks(){
     this.bookService.GetAllBooks().subscribe({
       next:(data)=>{
@@ -44,25 +45,53 @@ export class BooksForAdminComponent implements OnInit{
     this.getAllBooks();
   }
   // delet book
-  deletBook(id: number): void {
-    if (confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')) {
+deleteBook(id: number): void {
+  // Show SweetAlert confirmation dialog
+  Swal.fire({
+    title: 'Êtes-vous sûr de vouloir supprimer ce livre ?',
+    text: "Cette action est irréversible.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, supprimer',
+    cancelButtonText: 'Annuler',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If user confirms, call the deleteBook service
       this.bookService.deleteBook(id).subscribe({
-        next: () => {
-          console.log('Livre supprimé avec succès');
-          this.getAllBooks(); // Actualiser la liste des livres
+        next: (response) => {
+          // Handle success response
+          if (response && response.message) {
+            Swal.fire({
+              icon: 'success',
+              title: response.message,
+              text: 'Le livre a été supprimé de la liste.',
+              timer: 2000,
+              showConfirmButton: false
+            });
+            this.getAllBooks(); // Refresh the book list
+          }
         },
         error: (err) => {
           console.error('Erreur lors de la suppression du livre', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de la suppression du livre.',
+          });
         }
       });
-    }}
-  
+    }
+  });
+}
+
+
 
 
 
       // Créer une copie du livre sélectionné pour ne pas modifier les données originales
   openModal(book: any) {
-    this.selectedBook = { ...book };  
+    this.selectedBook = { ...book };
   }
 
   // Fonction pour sauvegarder les modifications
@@ -91,7 +120,7 @@ export class BooksForAdminComponent implements OnInit{
   }
 
   // Fonction pour mettre à jour la couverture
-  // ne donctionne pas correctement 
+  // ne donctionne pas correctement
   updateCover(cover: File): void {
     const bookId = this.selectedBook.id; // Id du livre à mettre à jour
     this.bookService.updateCover(bookId, cover).subscribe({
@@ -106,9 +135,9 @@ export class BooksForAdminComponent implements OnInit{
     });
   }
 
- 
+
   openCoverModal(book: any) {
-    this.selectedBook = { ...book }; 
+    this.selectedBook = { ...book };
     const modalElement = document.getElementById('coverModal');
     if (modalElement) {
       // Initialise et affiche le modal avec Bootstrap
@@ -130,11 +159,11 @@ export class BooksForAdminComponent implements OnInit{
           this.unavailableBook = response[0];
           console.log(" unavailableBook:",this.unavailableBook);
           console.log(" titre:",response[0].user.fullName);
-          
+
         },
         error:(error)=>{
           console.error(error);
-          
+
         }
       })
 
@@ -157,17 +186,17 @@ export class BooksForAdminComponent implements OnInit{
           const modalInstance = new Modal(modalElement); // Créer une instance du modal
           modalInstance.hide(); // Fermer le modal
         }
-      
+
         console.log("test");
         },
 
-      
+
       error:(error)=>{
         console.error(error);
-        
+
       }
     })
 
   }
-  
+
 }

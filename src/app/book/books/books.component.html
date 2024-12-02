@@ -12,32 +12,32 @@
           <span class="badge bg-success">{{ book.stateBook || 'Available' }}</span>
         </div>
       </div>
-    </div>  
+    </div>
   </div>
 </div> -->
 <!-- pour la cathegorie  -->
 <div class="cathegorie_Filter_Container">
-  <div 
-    class="cathegorie_Filter_items" 
-    [class.active]="selectedCategory === 'all'" 
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === 'all'"
     (click)="filterBooks('all')">
     <h4>all</h4>
   </div>
-  <div 
-    class="cathegorie_Filter_items" 
-    [class.active]="selectedCategory === 'romantique'" 
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === 'romantique'"
     (click)="filterBooks('romantique')">
     <h4>romantique</h4>
   </div>
-  <div 
-    class="cathegorie_Filter_items" 
-    [class.active]="selectedCategory === 'drole'" 
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === 'drole'"
     (click)="filterBooks('drole')">
     <h4>drole</h4>
   </div>
-  <div 
-    class="cathegorie_Filter_items" 
-    [class.active]="selectedCategory === 'dangereux'" 
+  <div
+    class="cathegorie_Filter_items"
+    [class.active]="selectedCategory === 'dangereux'"
     (click)="filterBooks('dangereux')">
     <h4>dangereux</h4>
   </div>
@@ -48,9 +48,9 @@
   <swiper-slide *ngFor="let book of books">
     <div class="category-item"  (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#bookModal">
       <div class="category-card">
-        <img 
-        [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'" 
-        alt="{{ book.title }}" 
+        <img
+        [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'"
+        alt="{{ book.title }}"
         class="category-image">
               <div class="category-info">
           <h3>Titre: {{ book.title }}</h3>
@@ -60,7 +60,7 @@
           <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ book.stateBook || 'Available' }}</span>
         </div>
       </div>
-    </div> 
+    </div>
   </swiper-slide>
 
 </swiper-container>

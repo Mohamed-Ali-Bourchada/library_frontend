@@ -21,7 +21,7 @@ export class UsersForAdminComponent implements OnInit{
       },
       error:(Error)=>{
         console.log(Error);
-        
+
       }
     })
   }

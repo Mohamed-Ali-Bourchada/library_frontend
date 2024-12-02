@@ -57,13 +57,13 @@ export class NavbarComponent implements OnInit {
   }
   onNavigateToHistorique():void{
     if(this.userId){
-    this.router.navigate(['/historique',this.userId])//voir leur historique 
+    this.router.navigate(['/historique',this.userId])//voir leur historique
   } else {
     console.error('User ID is not available.');
   }
 }
 
-  isNavbarCollapsed = true; // Track the collapse state
+  isNavbarCollapsed = false; // Track the collapse state
 
   toggleNavbar() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed; // Toggle collapse state
