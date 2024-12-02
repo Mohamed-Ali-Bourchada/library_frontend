@@ -23,3 +23,7 @@
     z-index: 10; /* Place l'image au-dessus des autres */
   }
   
+
+  .clickable {
+    cursor: pointer;
+  }
