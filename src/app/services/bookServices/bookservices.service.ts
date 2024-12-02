@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -40,9 +41,16 @@ export class BookservicesService {
     // Envoi de la requête PUT pour mettre à jour la couverture du livre
     return this.http.put(`${this.apiUrl}${id}/updateCover`, formData);
   }
-  deleteBook(id:number):Observable<any>{
-    return this.http.delete(`${this.apiUrl}delete/${id}`)
-  }
+deleteBooks(bookIds: number[]): Observable<any> {
+  return this.http.post(`${this.apiUrl}deleteBooks`, bookIds, {
+    headers: { 'Content-Type': 'application/json' }
+  })
+}
+
+
+
+
+
 
 
 }

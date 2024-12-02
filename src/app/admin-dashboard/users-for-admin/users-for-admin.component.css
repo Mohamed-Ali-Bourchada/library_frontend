@@ -1,0 +1,90 @@
+/* Custom responsive adjustments for the search bar and table */
+.input-group input {
+  border-radius: 30px;
+  /* Rounded corners for the search bar */
+  padding: 10px 20px;
+  /* Better padding for the input field */
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  /* Center align text vertically in table cells */
+}
+
+.table td,
+.table th {
+  font-size: 0.9rem;
+  /* Slightly smaller font for better readability */
+}
+
+/* Optional: Add spacing to the top of the table */
+.mt-4 {
+  margin-top: 2rem;
+}
+
+/* Adjust table font size on smaller screens */
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.8rem;
+    /* Smaller font size for mobile */
+  }
+}
+/* Custom card styling for mobile */
+.card {
+  border-radius: 10px; /* Rounded corners for the cards */
+  border: 1px solid #ddd; /* Subtle border for the cards */
+}
+
+.card-body {
+  padding: 15px; /* Spacing inside the card */
+}
+
+.card-title {
+  font-size: 1.2rem; /* Larger title for better readability */
+}
+
+.card-text {
+  font-size: 1rem; /* Slightly smaller font size for card text */
+}
+
+.card-text strong {
+  color: #333; /* Darker color for the labels inside the card */
+}
+
+.badge {
+  font-size: 0.9rem; /* Adjust badge size */
+}
+
+/* Adjust font size for small screens */
+@media (max-width: 576px) {
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+}
+/* Pagination styles */
+.pagination-controls {
+  margin-top: 20px;
+}
+
+.pagination-controls .pagination {
+  justify-content: center;
+}
+
+.pagination-controls .page-link {
+  border-radius: 50%;
+}
+
+.pagination-controls .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination-controls .page-link:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}

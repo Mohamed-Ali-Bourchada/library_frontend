@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'profile/:id', component: ProfileComponent },
   {path:'historique/:id',component:HistoriqueComponent},
-  { path: 'admin-dashboard', 
+  { path: 'admin-dashboard',
     component: AdminDashboardComponent ,
   children:[
     {path:'',component:BooksForAdminComponent},

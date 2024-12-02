@@ -1,54 +1,71 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <!-- Section des filtres -->
-    <div></div>
-  
-    <!-- Section de recherche alignée à droite -->
-    <div class="d-flex align-items-center">
-      <input 
-        type="text" 
-        class="form-control w-50 me-2" 
-        placeholder="Rechercher un livre..."
-          >
-          <!-- [(ngModel)]="searchTerm" -->
-          <!-- Liens bidirectionnels pour la recherche -->
-      
-      <button 
-        class="btn btn-outline-secondary"
-        >Rechercher</button>
-        <!-- (click)="searchBooks()" -->
+<div class="container mt-4">
+  <!-- Section de recherche -->
+  <div class="row mb-4">
+    <div class="col-12 col-md-6 offset-md-3">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Rechercher un utilisateur..." [(ngModel)]="searchTerm"
+          (input)="onSearch()" aria-label="Rechercher un utilisateur" />
+      </div>
     </div>
   </div>
-  
+
   <!-- Tableau des utilisateurs -->
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nom Complet</th>
-        <th>Email</th>
-        <th>Téléphone</th>
-        <th>Adresse</th>
-        <th>Date de Naissance</th>
-        <th>Date d'Inscription</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.fullName }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.telephone }}</td>
-        <td>{{ user.adresse }}</td>
-        <td>{{ user.dateNaiss  }}</td>
-        <td>{{ user.dateInscri  }}</td>
-        <td>
-          <div class="btn btn-warning m-1"  data-bs-toggle="modal" data-bs-target="#editUserModal">
-            Modifier
-          </div>
-          <div class="btn btn-danger m-1" >
-            Supprimer
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <div class="table-responsive">
+    <table class="table table-hover table-striped d-none d-md-table">
+      <thead>
+        <tr>
+          <th>Nom Complet</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Adresse</th>
+          <th>Date de Naissance</th>
+          <th>Date d'Inscription</th>
+          <th>Admin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telephone }}</td>
+          <td>{{ user.adresse }}</td>
+          <td>{{ user.dateNaiss | date: 'shortDate' }}</td>
+          <td>{{ user.dateInscri | date: 'shortDate' }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+                'bg-success': user.isAdmin,
+                'bg-secondary': !user.isAdmin
+              }">
+              {{ user.isAdmin ? 'Admin' : 'Utilisateur' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mobile View as Cards -->
+    <div *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
+      class="card mb-3 d-md-none">
+      <div class="card-body">
+        <h5 class="card-title">{{ user.fullName }}</h5>
+        <p class="card-text">
+          <strong>Email:</strong> {{ user.email }}<br>
+          <strong>Téléphone:</strong> {{ user.telephone }}<br>
+          <strong>Adresse:</strong> {{ user.adresse }}<br>
+          <strong>Date de Naissance:</strong> {{ user.dateNaiss | date: 'shortDate' }}<br>
+          <strong>Date d'Inscription:</strong> {{ user.dateInscri | date: 'shortDate' }}<br>
+          <strong>Role:</strong>
+          <span class="badge" [ngClass]="{
+                'bg-success': user.isAdmin,
+                'bg-secondary': !user.isAdmin
+              }">
+            {{ user.isAdmin ? 'Admin' : 'Utilisateur' }}
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Pagination controls -->
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>
