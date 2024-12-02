@@ -28,7 +28,7 @@ export class BooksForAdminComponent implements OnInit{
     'educatif',
     'aventure',
     'educative'];
-    
+
   constructor(
     private bookService:BookservicesService,
     private emprunteService:EmpruntServicesService,
@@ -74,10 +74,8 @@ export class BooksForAdminComponent implements OnInit{
       })
     }
   }
-  getBookByState(stateBooks:string ){
+  getBookByState(stateBooks: string) {
     this.bookService.getBooksByState(stateBooks).subscribe({
-      next:(data)=>{
-        this.books=data
       next: (data) => {
         this.books = data;
       },
@@ -162,6 +160,7 @@ saveChanges() {
           confirmButtonText: 'OK'
         }).then(() => {
           this.getAllBooks();
+
         });
       } else {
         // Handle genuine errors
@@ -282,29 +281,32 @@ deleteSelectedBooks() {
   }
   unavailableBook: any = null; // Stocker le livre indisponible
 
+openUnavailableModal(book: any) {
+  console.log('Book reçu:', book);
+  console.log('Book ID:', book.id);
 
-  openUnavailableModal(book: any) {
-    console.log('Book reçu:', book);
-    console.log('Book reçu:', book.id);
+  if (book.stateBook === 'indisponible') {
+    this.emprunteService.getEmpruntesForBook(book.id).subscribe({
+      next: (response) => {
+        this.unavailableBook = response[0];
+        console.log("Unavailable Book:", this.unavailableBook);
 
-    if (book.stateBook === 'indisponible') {
-       this.emprunteService.getEmpruntesForBook(book.id).subscribe({
-        //this.http.get('http://localhost:8081/api/empreunt/getBook/3').subscribe({
-        next:(response)=>{
-          this.unavailableBook = response[0];
-          console.log(" unavailableBook:",this.unavailableBook);
-          console.log(" titre:",response[0].user.fullName);
-
-        },
-        error:(error)=>{
-          console.error(error);
-
+        // Ensure modal is in the DOM
+        const modalElement = document.getElementById('unavailableModal');
+        if (modalElement) {
+          const modal = new Modal(modalElement);
+          modal.show();
+        } else {
+          console.error('Modal element not found!');
         }
-      })
-
-       // Stocker les détails du livre
-    }
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
+}
+
   // Fonction pour comparer la date actuelle avec la date de retour prévue
   isDateRetourBeforeNow(dateRetourPrevu: string | null): boolean {
     if (!dateRetourPrevu) return true; // Par défaut, pas d'erreur si aucune date fournie

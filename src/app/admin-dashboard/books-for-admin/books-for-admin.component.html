@@ -17,11 +17,11 @@
             placeholder="taper le Titre ..."
             [(ngModel)]="titreAchercher"
             (keyup.enter)="searchBooks()">
-              
+
           <button
             class="btn btn-outline-secondary"(click)="searchBooks()"
             >Rechercher</button>
-            
+
         </div>
       </div>
 <button type="button" class="btn btn-danger" (click)="deleteSelectedBooks()">Supprimer les livres sélectionnés</button>
@@ -176,11 +176,11 @@
 
 
 
-<!-- Modal pour état indisponible -->
+<!-- Modal for unavailable book -->
 <div class="modal fade" id="unavailableModal" tabindex="-1" aria-labelledby="unavailableModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content shadow-lg rounded">
-      <!-- En-tête du modal -->
+      <!-- Modal Header -->
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title d-flex align-items-center" id="unavailableModalLabel">
           <i class="bi bi-book me-2"></i>{{ unavailableBook?.book?.title }}
@@ -188,7 +188,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <!-- Corps du modal -->
+      <!-- Modal Body -->
       <div class="modal-body">
         <div class="d-flex flex-column align-items-start">
           <p class="mb-2">
@@ -207,9 +207,7 @@
             <i class="bi bi-calendar text-primary me-2"></i>
             <strong>Date d'emprunt :</strong> {{ unavailableBook?.dateEmprunt | date:'shortDate' }}
           </p>
-          <p
-            class="mb-2"
-            [ngClass]="{
+          <p class="mb-2" [ngClass]="{
               'text-success': isDateRetourBeforeNow(unavailableBook?.dateRoutourPrevu),
               'text-danger': !isDateRetourBeforeNow(unavailableBook?.dateRoutourPrevu)
             }">
@@ -217,18 +215,14 @@
             <strong>Date de retour :</strong> {{ unavailableBook?.dateRoutourPrevu | date:'shortDate' }}
           </p>
 
-          <!-- Bouton pour définir le retour si la date est passée -->
-          <button
-            class="btn btn-warning mt-2"
-            (click)="setRetourBook(unavailableBook?.id)"
-            data-bs-dismiss="modal">
-            <i class="bi bi-arrow-repeat me-1"
-            ></i> Marquer comme retourné
+          <!-- Return Button -->
+          <button class="btn btn-warning mt-2" (click)="setRetourBook(unavailableBook?.id)" data-bs-dismiss="modal">
+            <i class="bi bi-arrow-repeat me-1"></i> Marquer comme retourné
           </button>
         </div>
       </div>
 
-      <!-- Pied de page du modal -->
+      <!-- Modal Footer -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           <i class="bi bi-x-circle"></i> Fermer
@@ -236,4 +230,7 @@
       </div>
     </div>
   </div>
+</div>
+
+
 </div>
