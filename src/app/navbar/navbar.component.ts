@@ -62,4 +62,10 @@ export class NavbarComponent implements OnInit {
     console.error('User ID is not available.');
   }
 }
+
+  isNavbarCollapsed = true; // Track the collapse state
+
+  toggleNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed; // Toggle collapse state
+  }
 }
