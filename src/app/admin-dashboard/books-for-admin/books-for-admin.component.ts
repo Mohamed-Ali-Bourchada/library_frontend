@@ -7,16 +7,20 @@ import {Modal} from 'bootstrap';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-books-for-admin',
   standalone:true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,NgxPaginationModule],
   templateUrl: './books-for-admin.component.html',
   styleUrl: './books-for-admin.component.css'
 })
 export class BooksForAdminComponent implements OnInit{
   books :Array<any>=[];
-
+  page: number = 1;  // Current page
+  itemsPerPage: number = 10; 
+  searchTerm: string = '';
+  filteredBooks: any[] = [];
 
   selectedBook: any = {};  // Pour stocker les informations du livre sélectionné
 
@@ -39,11 +43,23 @@ export class BooksForAdminComponent implements OnInit{
   }
 
   validationErrors: any = {}; // To store validation errors
-
+  onSearch(): void {
+    if (this.searchTerm) {
+      this.filteredBooks = this.books.filter((book) => {
+        return (
+          book.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      });
+    } else {
+      this.filteredBooks = [...this.books];  // Reset to all users if searchTerm is empty
+    }
+    this.page = 1;  // Reset pagination to the first page when search is done
+  }
   getAllBooks() {
     this.bookService.GetAllBooks().subscribe({
       next:(data)=>{
         this.books=data
+        this.filteredBooks = data; 
       },
       error: (err) => {
         console.error("Erreur lors de l'importer des livre", err);
@@ -78,6 +94,8 @@ export class BooksForAdminComponent implements OnInit{
     this.bookService.getBooksByState(stateBooks).subscribe({
       next: (data) => {
         this.books = data;
+        this.filteredBooks = data;
+        this.searchTerm=""
       },
       error: (err) => {
         console.error('Error fetching books:', err);
@@ -242,32 +260,75 @@ deleteSelectedBooks() {
   });
 }
 
-
-
-
-
-  onCoverFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.updateCover(file);
-    }
+fileSelected!: string | ArrayBuffer | null;
+ cover!: File ;
+onCoverFileSelected(event: any): void {
+   this.cover= event.target.files[0];
+  if (this.cover) {
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.fileSelected = e.target?.result ?? null; // Utilise null si result est undefined
+    };
+    reader.readAsDataURL(this.cover); // Lit le fichier comme une URL de données (base64)
   }
+}
+  
 
   // Fonction pour mettre à jour la couverture
   // ne donctionne pas correctement
-  updateCover(cover: File): void {
+  updateCover(): void {
     const bookId = this.selectedBook.id; // Id du livre à mettre à jour
-    this.bookService.updateCover(bookId, cover).subscribe({
+    this.bookService.updateCover(bookId, this.cover).subscribe({
       next: (response) => {
-        console.log('Couverture mise à jour avec succès !', response);
-        // Effectuer les actions nécessaires après la mise à jour, comme fermer le modal, etc.
-      },
-      error: (error) => {
-        console.error('Erreur lors de la mise à jour de la couverture', error);
-        // Gérer l'erreur si nécessaire
-      }
+    // Handle successful response
+    console.log('Réponse du backend :', response);
+    const modalElement = document.getElementById('coverModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance?.hide();
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'cover mis à jour avec succès',
+      text: 'cover a été changé.',
+      confirmButtonText: 'OK'
+    }).then(() => {
+      this.getAllBooks();
     });
+  },
+  error: (error) => {
+    if (error.status === 200) {
+      // Treat status 200 as success if backend doesn't return valid JSON
+      console.warn('Réponse non standard, mais mise à jour effectuée.');
+      const modalElement = document.getElementById('coverModal');
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance?.hide();
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'cover mis à jour avec succès',
+        text: 'cover été mises à jour, bien que la réponse du serveur ne soit pas standard.',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        this.getAllBooks();
+
+      });
+    } else {
+      // Handle genuine errors
+      console.error('Erreur lors de la mise à jour du cover :', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors de la mise à jour',
+        text: error.error || 'Une erreur est survenue lors de la mise à jour du cover. Veuillez réessayer.',
+        confirmButtonText: 'OK'
+      });
+    }
   }
+});
+}
 
 
   openCoverModal(book: any) {
