@@ -15,11 +15,11 @@
             required="required"
             class="form-control w-50 me-2"
             placeholder="taper le Titre ..."
-            [(ngModel)]="titreAchercher"
-            (keyup.enter)="searchBooks()">
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()">
 
           <button
-            class="btn btn-outline-secondary"(click)="searchBooks()"
+            class="btn btn-outline-secondary"(click)="searchBooks()" 
             >Rechercher</button>
 
         </div>
@@ -46,7 +46,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let book of books">
+    <tr *ngFor="let book of filteredBooks| paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
       <td>
         <input type="checkbox" [(ngModel)]="book.selected" />
       </td>
@@ -77,6 +77,7 @@
     </tr>
   </tbody>
 </table>
+<pagination-controls (pageChange)="page = $event"></pagination-controls>
 
 <!-- Button to trigger delete for selected books -->
 
@@ -140,7 +141,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" (click)="saveChanges()">
+        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal"(click)="saveChanges()">
           Enregistrer les modifications
         </button>
       </div>
@@ -161,14 +162,14 @@
         <input type="file" (change)="onCoverFileSelected($event)" accept="image/*" class="form-control" />
         <img
           *ngIf="selectedBook.cover"
-          [src]="'data:image/jpeg;base64,' + selectedBook.cover"
+          [src]="fileSelected ? fileSelected:'data:image/jpeg;base64,' + selectedBook.cover"
           alt="Aperçu de la couverture"
           class="img-fluid mt-3"
           style="max-height: 300px;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" (click)="updateCover(selectedBook.cover)">Enregistrer</button>
+        <button type="button" class="btn btn-primary"   data-bs-dismiss="modal" (click)="updateCover()">Enregistrer</button>
       </div>
     </div>
   </div>
