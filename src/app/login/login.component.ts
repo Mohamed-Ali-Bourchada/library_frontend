@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -52,14 +52,9 @@ onSubmit() {
   // Call the AuthService login method
   this.authService.login(this.email, this.password, headers).subscribe(
     (response: any) => {
-      console.log('Login successful', response);
       this.errorMessage = '';
 
-      // Log email and password here to check if they are available
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);  // Ensure password is logged here
 
-      // Set user details in AuthService to manage session state
       const user = {
         username: response.fullName,  // Get full name from response
         isAdmin: response.isAdmin,
@@ -84,7 +79,6 @@ onSubmit() {
       });
     },
     (error) => {
-      console.error('Login failed', error);
       this.errorMessage = 'Invalid email or password.';
     }
   );

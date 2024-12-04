@@ -1,0 +1,55 @@
+.all-books-div{
+  margin-top: 100px;
+  margin-left: 20px;
+}
+.all-books-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.book-card {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+}
+
+.pagination-container {
+  margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .card-body {
+    padding: 10px;
+  }
+}

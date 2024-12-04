@@ -1,20 +1,4 @@
 
-<!-- <div class="categories-section" id="catalog">
-  <h2 class="categories-title">Our Book Collection</h2>
-  <div class="categories-grid">
-    <div class="category-item" *ngFor="let book of books">
-      <div class="category-card">
-        <img src="images/fiction.jpg" alt="Fiction" class="category-image">
-        <div class="category-info">
-          <h3>Titre: {{ book.title }}</h3>
-          <p>Auteur: {{book.author }}</p>
-          <h4><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</h4>
-          <span class="badge bg-success">{{ book.stateBook || 'Available' }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
 <!-- pour la cathegorie  -->
 <div class="cathegorie_Filter_Container">
   <div
@@ -62,8 +46,8 @@
 </div>
 
 <!-- carousel  -->
-<swiper-container loop="true" navigation="true" slides-per-view="2">
-  <swiper-slide *ngFor="let book of books">
+<swiper-container loop="true" navigation="true" slides-per-view="2" autoplay="true" autoplay-delay="2000"
+  autoplay-speed="500">  <swiper-slide *ngFor="let book of books">
     <div class="category-item"  (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#bookModal">
       <div class="category-card">
         <img
@@ -75,7 +59,7 @@
           <p>Auteur: {{book.author }}</p>
           <!-- badge bg-success -->
           <h4><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</h4>
-          <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ book.stateBook || 'Available' }}</span>
+          <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-success'">{{ book.stateBook || 'Available' }}</span>
         </div>
       </div>
     </div>
@@ -83,12 +67,16 @@
 
 </swiper-container>
 <!-- show all book -->
- <div class="btnShowAll">
-  <div class="btn btn-outline-info ">show all</div>
- </div>
-<!-- model  -->
- <!-- Modal pour afficher les informations du livre -->
-<!-- Modal pour afficher les informations du livre -->
+<div class="btnShowAll d-flex justify-content-center">
+  <button class="btnShowAll d-flex justify-content-center btn btn-info rounded-pill px-4 py-2 d-flex align-items-center shadow-sm">
+  <a class="nav-link text-dark" routerLink="/all-books" routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">
+    <i class="fas fa-book me-1"></i> All Books
+  </a> <!-- Icon to represent books -->
+  </button>
+</div>
+
+<!-- Modal for displaying book details -->
 <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -98,39 +86,28 @@
       </div>
       <div class="modal-body">
         <div class="d-flex">
-          <!-- Image on the left -->
-          <div class="image-container me-4">
-            <img [src]="BookDetails?.cover ? 'data:image/jpeg;base64,' + BookDetails.cover : 'assets/images/default-cover.jpg'"
-                 alt="{{ BookDetails?.title }}"
-                 class="img-fluid rounded-3 shadow-lg">
+          <!-- Book Image -->
+          <div class="me-3">
+            <img
+              [src]="BookDetails?.cover ? 'data:image/jpeg;base64,' + BookDetails.cover : 'assets/images/default-cover.jpg'"
+              alt="{{ BookDetails?.title }}" class="img-fluid rounded shadow">
           </div>
-
-          <!-- Book Details on the right -->
-          <div class="book-details">
-            <div class="mb-3">
-              <label for="bookTitle" class="form-label">Titre</label>
-              <h4 class="book-info">{{ BookDetails?.title }}</h4>
-            </div>
-
-            <div class="mb-3">
-              <label for="bookAuthor" class="form-label">Auteur</label>
-              <p class="book-info">{{ BookDetails?.author }}</p>
-            </div>
-
-            <div class="mb-3">
-              <label for="bookSujet" class="form-label">Sujet</label>
-              <p class="book-info">{{ BookDetails?.sujet }}</p>
-            </div>
-            <div class="mb-3">
-              <span [class]="BookDetails.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ BookDetails.stateBook || 'Available' }}</span>
-
-            </div>
+          <!-- Book Info -->
+          <div>
+            <h6><strong>Author:</strong> {{ BookDetails?.author }}</h6>
+            <p><strong>Category:</strong> {{ BookDetails?.category || 'Uncategorized' }}</p>
+            <p><strong>Subject:</strong> {{ BookDetails?.sujet || 'N/A' }}</p>
+            <span [class]="BookDetails.stateBook === 'disponible' ? 'badge bg-success' : 'badge bg-danger'">
+              {{ BookDetails.stateBook || 'Available' }}
+            </span>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary">Emprunter</button>
+        <button type="button" class="btn btn-primary" [disabled]="BookDetails.stateBook !== 'disponible'">
+          Emprunter
+        </button>
       </div>
     </div>
   </div>

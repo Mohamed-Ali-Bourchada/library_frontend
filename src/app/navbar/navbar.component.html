@@ -27,7 +27,13 @@
             <i class="fas fa-book me-1"></i> Catalog
           </a>
         </li>
-
+  <!-- Contact -->
+  <li class="nav-item">
+    <a class="nav-link text-dark" routerLink="/all-books" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fas fa-envelope me-1"></i> All Books
+    </a>
+  </li>
         <!-- Admin Dashboard -->
         <li class="nav-item" *ngIf="isLoggedIn && isAdmin">
           <a class="nav-link text-dark" routerLink="/admin-dashboard" routerLinkActive="active"
@@ -35,6 +41,12 @@
             <i class="fas fa-tachometer-alt me-1"></i> Dashboard
           </a>
         </li>
+  <!-- Contact -->
+  <li class="nav-item">
+    <a class="nav-link text-dark" href="#contact">
+      <i class="fas fa-envelope me-1"></i> Contact
+    </a>
+  </li>
 
           <!-- User Dropdown -->
           <li class="nav-item dropdown" *ngIf="isLoggedIn">
@@ -73,13 +85,7 @@
           </a>
         </li>
 
-        <!-- Contact -->
-        <li class="nav-item">
-          <a class="nav-link text-dark" routerLink="/contact" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fas fa-envelope me-1"></i> Contact
-          </a>
-        </li>
+
       </ul>
     </div>
   </div>

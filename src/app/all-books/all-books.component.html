@@ -1,0 +1,84 @@
+<div class="all-books-div">
+<!-- Filter Buttons -->
+
+<div class="btn-group text-center my-3">
+  <button class="btn btn-outline-primary me-2" (click)="ngOnInit()">All</button>
+  <button class="btn btn-outline-success me-2" (click)="getBookByState('disponible')">Disponible</button>
+  <button class="btn btn-outline-danger" (click)="getBookByState('indisponible')">Non Disponibles</button>
+</div>
+
+<!-- Search Bar -->
+<div class="search-bar-container text-center my-3">
+  <input type="text" class="form-control" placeholder="Rechercher un livre par nom..." [(ngModel)]="searchTerm"
+    (ngModelChange)="applySearchAndPagination()" />
+</div>
+
+
+<!-- Books Grid Display with Pagination -->
+<div class="all-books-container">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <div *ngFor="let book of paginatedBooks" class="col">
+      <div class="book-card" (click)="showBookDetails(book)" data-bs-toggle="modal" data-bs-target="#bookModal">
+        <div class="card">
+          <img [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'assets/images/default-cover.jpg'"
+            alt="{{ book.title }}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text">By: {{ book.author }}</p>
+            <p class="card-text">
+              <strong>Category:</strong> {{ book.category || 'Uncategorized' }}
+            </p>
+            <span [class]="book.stateBook === 'disponible' ? 'badge bg-success' : 'badge bg-danger'">
+              {{ book.stateBook || 'Available' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container text-center">
+    <ngb-pagination [collectionSize]="filteredBooks.length" [(page)]="currentPage" [pageSize]="itemsPerPage"
+      (pageChange)="onPageChange($event)">
+    </ngb-pagination>
+  </div>
+</div>
+
+<!-- Modal for Book Details -->
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookModalLabel">{{ BookDetails?.title }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex">
+          <!-- Book Image -->
+          <div class="me-3">
+            <img
+              [src]="BookDetails?.cover ? 'data:image/jpeg;base64,' + BookDetails.cover : 'assets/images/default-cover.jpg'"
+              alt="{{ BookDetails?.title }}" class="img-fluid rounded shadow">
+          </div>
+          <!-- Book Info -->
+          <div>
+            <h6><strong>Author:</strong> {{ BookDetails?.author }}</h6>
+            <p><strong>Category:</strong> {{ BookDetails?.category || 'Uncategorized' }}</p>
+            <p><strong>Subject:</strong> {{ BookDetails?.sujet || 'N/A' }}</p>
+            <span [class]="BookDetails.stateBook === 'disponible' ? 'badge bg-success' : 'badge bg-danger'">
+              {{ BookDetails.stateBook || 'Available' }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-primary" [disabled]="BookDetails.stateBook !== 'disponible'">
+          Emprunter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

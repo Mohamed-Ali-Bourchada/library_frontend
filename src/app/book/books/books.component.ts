@@ -1,12 +1,13 @@
 import { Component,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';  // Import CommonModule
 import { BookservicesService } from '../../services/bookServices/bookservices.service';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [CommonModule,
+  imports: [CommonModule,RouterModule
 
   ],  // Add CommonModule here
   templateUrl: './books.component.html',
@@ -22,16 +23,15 @@ export class BooksComponent {
    category:"educatif"
    }
    categories = [
-    'romantique',
-    'drole',
-    'fantastique',
-    'historique',
-    'educatif',
-    'aventure',
-    'educative'];
+    'Romantique',
+    'Rrole',
+    'Fantastique',
+    'Historique',
+    'Educatif',
+    'Aventure',];
 
   books: Array<any> = [];
-  
+
 
   constructor(private bookservicesService: BookservicesService) {}
 
@@ -46,7 +46,7 @@ export class BooksComponent {
   ngOnInit() {
     this.getAllBooks();
   }
-  
+
   bookByCategorie(category: string){
     this.bookservicesService.getBooksByCategories(category).subscribe({
       next:(data)=>{
