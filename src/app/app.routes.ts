@@ -37,7 +37,7 @@ export const routes: Routes = [
     {path:'booksForAdmin',component:BooksForAdminComponent},
     {path:'usersForAdmin',component:UsersForAdminComponent},
     {path:'createBook',component:CreateBookComponent}
-  ]
+  ]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'historique/:id', component: HistoriqueComponent, canActivate: [AuthGuard] }, // Accessible by users
   {

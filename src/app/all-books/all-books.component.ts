@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BookservicesService } from '../services/bookServices/bookservices.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';  // <-- Add this for ngModel
-
+import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-all-books',
   standalone: true,
-  imports: [CommonModule, NgbPaginationModule, FormsModule],
+  imports: [CommonModule, NgbPaginationModule, FormsModule,RouterModule],
   templateUrl: './all-books.component.html',
   styleUrls: ['./all-books.component.css']
 })
@@ -20,7 +21,8 @@ export class AllBooksComponent implements OnInit {
   searchTerm: string = '';  // Search term for filtering books by name
   filteredBooks: any[] = [];  // Define filteredBooks as a separate property
 
-  constructor(private bookservices: BookservicesService) {}
+  constructor(private bookservices: BookservicesService,private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getAllBooks();
@@ -75,5 +77,16 @@ export class AllBooksComponent implements OnInit {
 
   showBookDetails(book: any): void {
     this.BookDetails = book; // Set the selected book details
+  }
+  onNavigateToEmprent(book: any): void {
+    if (book) {
+      this.router.navigate(['/emprenter'], { state: { book } });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: "Le livre à emprunter n'est pas trouvé.",
+      });
+    }
   }
 }
