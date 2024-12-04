@@ -37,7 +37,6 @@ export class AuthService {
 
   // Set user details in BehaviorSubjects and localStorage
   setUserDetails(user: any) {
-    console.log('Setting user details:', user);  // Debugging user details
 
     // Update BehaviorSubjects with user details
     this.isLoggedInSubject.next(true);

@@ -9,6 +9,14 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule,
     RouterModule
+import { RouterModule } from '@angular/router';
+
+
+@Component({
+  selector: 'app-books',
+  standalone: true,
+  imports: [CommonModule,RouterModule
+
   ],  // Add CommonModule here
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css'],
@@ -23,13 +31,12 @@ export class BooksComponent {
    category:"educatif"
    }
    categories = [
-    'romantique',
-    'drole',
-    'fantastique',
-    'historique',
-    'educatif',
-    'aventure',
-    'educative'];
+    'Romantique',
+    'Rrole',
+    'Fantastique',
+    'Historique',
+    'Educatif',
+    'Aventure',];
 
   books: Array<any> = [];
   
@@ -37,6 +44,11 @@ export class BooksComponent {
     private router: Router,
     private authService: AuthService) {}
       
+
+
+
+  constructor(private bookservicesService: BookservicesService) {}
+
   getAllBooks() {
     this.bookservicesService.GetAllBooks().subscribe({
       next: (data) => {
@@ -48,7 +60,7 @@ export class BooksComponent {
   ngOnInit() {
     this.getAllBooks();
   }
-  
+
   bookByCategorie(category: string){
     this.bookservicesService.getBooksByCategories(category).subscribe({
       next:(data)=>{
