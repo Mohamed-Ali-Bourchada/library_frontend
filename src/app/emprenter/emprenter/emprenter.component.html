@@ -9,18 +9,14 @@
           <p>{{ book.description }}</p>
         </div>
       </div>
-  
-      <div class="return-date">
-        <label for="dateRoutourPrevu">Select Return Date:</label>
-        <input
-          type="date"
-          id="dateRoutourPrevu"
-          [(ngModel)]="dateRoutourPrevu"
-          class="date-input"
-        />
-      </div>
-  
+
+    <div class="return-date">
+      <label for="dateRoutourPrevu">Select Return Date:</label>
+      <input type="date" id="dateRoutourPrevu" [(ngModel)]="dateRoutourPrevu" [min]="minReturnDate" [max]="maxReturnDate"
+        class="date-input" />
+    </div>
+
+
       <button (click)="confirmEmprunt()" class="confirm-button">Confirm</button>
     </div>
   </div>
-  

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
@@ -30,8 +30,7 @@ export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'profile/:id', component: ProfileComponent },
   {path:'historique/:id',component:HistoriqueComponent},
-  {path:'emprenter',component:EmprenterComponent},
-  { path: 'admin-dashboard',component: AdminDashboardComponent 
+  { path: 'admin-dashboard',component: AdminDashboardComponent
     ,children:[
     {path:'',component:BooksForAdminComponent},
     {path:'booksForAdmin',component:BooksForAdminComponent},
@@ -39,7 +38,9 @@ export const routes: Routes = [
     {path:'createBook',component:CreateBookComponent}
   ]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'historique/:id', component: HistoriqueComponent, canActivate: [AuthGuard] }, // Accessible by users
+  { path: 'historique/:id', component: HistoriqueComponent, canActivate: [AuthGuard] },
+    {path:'emprenter',component: EmprenterComponent, canActivate:[AuthGuard] },
+ // Accessible by users
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,

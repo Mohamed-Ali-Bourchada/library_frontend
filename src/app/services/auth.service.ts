@@ -51,9 +51,15 @@ export class AuthService {
   }
 
   // Login method using Basic Authentication
-login(email: string, password: string, headers: HttpHeaders): Observable<any> {
-  return this.http.post(`${environment.apiBaseUrl}/api/users/me`, {}, { headers, withCredentials: true })
+login(email: string, password: string): Observable<any> {
+  // Create Basic Auth header
+  const base64Credentials = btoa(`${email}:${password}`);
+  const headers = new HttpHeaders().set('Authorization', `Basic ${base64Credentials}`);
+
+  // Send the request with the correct headers
+  return this.http.post(`${environment.apiBaseUrl}/api/users/me`, {}, { headers });
 }
+
 
 
   // Change password method

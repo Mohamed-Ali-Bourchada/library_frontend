@@ -45,15 +45,10 @@ onSubmit() {
     return;  // Prevent submission if there are errors
   }
 
-  // Create Basic Auth header
-  const base64Credentials = btoa(`${this.email}:${this.password}`);
-  const headers = new HttpHeaders().set('Authorization', `Basic ${base64Credentials}`);
-
   // Call the AuthService login method
-  this.authService.login(this.email, this.password, headers).subscribe(
+  this.authService.login(this.email, this.password).subscribe(
     (response: any) => {
       this.errorMessage = '';
-
 
       const user = {
         username: response.fullName,  // Get full name from response
@@ -80,6 +75,15 @@ onSubmit() {
     },
     (error) => {
       this.errorMessage = 'Invalid email or password.';
+
+      // Show error alert using SweetAlert2
+      Swal.fire({
+        title: 'Login Failed',
+        text: 'Invalid email or password. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   );
-}}
+}
+}
