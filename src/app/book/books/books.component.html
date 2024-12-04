@@ -5,7 +5,7 @@
     class="cathegorie_Filter_items"
     [class.active]="selectedCategory === 'all'"
     (click)="filterBooks('all')">
-    <h4>all</h4>
+    <h4>All</h4>
   </div>
   <div
     class="cathegorie_Filter_items"
@@ -66,10 +66,7 @@
   </swiper-slide>
 
 </swiper-container>
-<!-- show all book -->
- <div class="btnShowAll">
-  <div class="btn btn-outline-info ">show all</div>
- </div>
+
 <!-- model  -->
  
 <!-- Modal pour afficher les informations du livre -->
@@ -112,10 +109,6 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
         <button type="button" class="btn btn-primary" (click)="onNavigateToEmprent(BookDetails)" data-bs-dismiss="modal">Emprunter</button>
-
-        <button type="button" class="btn btn-primary" [disabled]="BookDetails.stateBook !== 'disponible'">
-          Emprunter
-        </button>
       </div>
     </div>
   </div>

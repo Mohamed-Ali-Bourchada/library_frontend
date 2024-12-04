@@ -74,7 +74,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary" [disabled]="BookDetails.stateBook !== 'disponible'">
+        <button type="button" class="btn btn-primary" [disabled]="BookDetails.stateBook !== 'disponible'" (click)="onNavigateToEmprent(BookDetails)" data-bs-dismiss="modal">
           Emprunter
         </button>
       </div>
