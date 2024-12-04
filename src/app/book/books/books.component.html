@@ -87,7 +87,7 @@
   <div class="btn btn-outline-info ">show all</div>
  </div>
 <!-- model  -->
- <!-- Modal pour afficher les informations du livre -->
+ 
 <!-- Modal pour afficher les informations du livre -->
 <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -130,7 +130,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-primary">Emprunter</button>
+        <button type="button" class="btn btn-primary" (click)="onNavigateToEmprent(BookDetails)" data-bs-dismiss="modal">Emprunter</button>
       </div>
     </div>
   </div>

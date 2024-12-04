@@ -1,13 +1,14 @@
 import { Component,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';  // Import CommonModule
 import { BookservicesService } from '../../services/bookServices/bookservices.service';
-
-
+import { AuthService } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-books',
   standalone: true,
   imports: [CommonModule,
-
+    RouterModule
   ],  // Add CommonModule here
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css'],
@@ -32,9 +33,10 @@ export class BooksComponent {
 
   books: Array<any> = [];
   
-
-  constructor(private bookservicesService: BookservicesService) {}
-
+  constructor(private bookservicesService: BookservicesService,
+    private router: Router,
+    private authService: AuthService) {}
+      
   getAllBooks() {
     this.bookservicesService.GetAllBooks().subscribe({
       next: (data) => {
@@ -66,4 +68,16 @@ export class BooksComponent {
     this.BookDetails=book;
   }
 
+  // Navigate to empreint page 
+  onNavigateToEmprent(book:any): void {
+    if (book) {
+      this.router.navigate(['/emprenter'] ,{ state: { book } }); 
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: "livre à emprenter n'est pas trouvé .",
+      });
+    }
+  }
 }

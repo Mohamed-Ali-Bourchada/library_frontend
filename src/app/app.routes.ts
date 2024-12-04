@@ -10,6 +10,8 @@ import { BooksForAdminComponent } from './admin-dashboard/books-for-admin/books-
 import { UsersForAdminComponent } from './admin-dashboard/users-for-admin/users-for-admin.component';
 import { CreateBookComponent } from './admin-dashboard/create-book/create-book.component';
 import { HistoriqueComponent } from './historique/historique/historique.component';
+import { EmprenterComponent } from './emprenter/emprenter/emprenter.component';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },            // Default route for home
@@ -19,9 +21,9 @@ export const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'profile/:id', component: ProfileComponent },
   {path:'historique/:id',component:HistoriqueComponent},
-  { path: 'admin-dashboard',
-    component: AdminDashboardComponent ,
-  children:[
+  {path:'emprenter',component:EmprenterComponent},
+  { path: 'admin-dashboard',component: AdminDashboardComponent 
+    ,children:[
     {path:'',component:BooksForAdminComponent},
     {path:'booksForAdmin',component:BooksForAdminComponent},
     {path:'usersForAdmin',component:UsersForAdminComponent},

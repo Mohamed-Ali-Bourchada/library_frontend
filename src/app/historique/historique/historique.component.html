@@ -12,18 +12,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let historique of historiques">
+      <tr *ngFor="let historique of historiques | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
         <td>{{ historique.book.title }}</td>
         <td>{{ historique.book.author }}</td>
         <td>{{ historique.book.category }}</td>
         <td>{{ historique.dateEmprunt }}</td>
         <!-- <td>{{ historique.dateEmprunt | date: 'shortDate' }}</td> -->
         <td>{{historique.dateRoutourPrevu}}</td>
-        <td [ngClass]="{'text-danger': !historique.dateRetourEffectif}">
-          {{ historique.dateRetourEffectif ? historique.dateRetourEffectif : "n'est pas encore retourné" }}
+        <td [ngClass]="{'text-danger': !historique.dateRoutourEffective}">
+          {{ historique.dateRoutourEffective ? historique.dateRoutourEffective : "n'est pas encore retourné" }}
         </td>
         
       </tr>
     </tbody>
   </table>
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
   
