@@ -14,13 +14,12 @@ import Swal from 'sweetalert2';
 export class CreateBookComponent implements OnInit {
   createBookForm: FormGroup;
   categories = [
-    'romantique',
-    'drole',
-    'fantastique',
-    'historique',
-    'educatif',
-    'aventure',
-    'educative',
+    'Romantique',
+    'Drole',
+    'Fantastique',
+    'Historique',
+    'Aventure',
+    'Educative',
   ];
   coverFile: File | null = null;
   errorMessage: string = '';
