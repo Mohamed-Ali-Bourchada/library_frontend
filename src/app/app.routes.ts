@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, CanActivate } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
@@ -12,35 +12,23 @@ import { CreateBookComponent } from './admin-dashboard/create-book/create-book.c
 import { HistoriqueComponent } from './historique/historique/historique.component';
 import { EmprenterComponent } from './emprenter/emprenter/emprenter.component';
 
-
 import { AuthGuard } from './guards/auth.guard'; // The AuthGuard to protect routes
 import { AdminGuard } from './guards/admin.guard'; // The AdminGuard to protect admin routes
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { AllBooksComponent } from './all-books/all-books.component';
-import { BrowserModule } from '@angular/platform-browser';
 
 export const routes: Routes = [
-      // Accessible by everyone
-
+  // Accessible by everyone
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'all-books', component: AllBooksComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'profile/:id', component: ProfileComponent },
-  {path:'historique/:id',component:HistoriqueComponent},
-  { path: 'admin-dashboard',component: AdminDashboardComponent
-    ,children:[
-    {path:'',component:BooksForAdminComponent},
-    {path:'booksForAdmin',component:BooksForAdminComponent},
-    {path:'usersForAdmin',component:UsersForAdminComponent},
-    {path:'createBook',component:CreateBookComponent}
-  ]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'historique/:id', component: HistoriqueComponent, canActivate: [AuthGuard] },
-    {path:'emprenter',component: EmprenterComponent, canActivate:[AuthGuard] },
- // Accessible by users
+  { path: 'emprenter', component: EmprenterComponent, canActivate: [AuthGuard] },
+
+  // Admin routes, protected by AdminGuard
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
@@ -55,7 +43,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes),BrowserModule,AllBooksComponent],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
