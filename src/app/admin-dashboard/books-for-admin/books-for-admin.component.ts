@@ -98,8 +98,11 @@ export class BooksForAdminComponent implements OnInit{
         this.searchTerm=""
       },
       error: (err) => {
-        console.error('Error fetching books:', err);
-      }
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Une erreur est survenue lors de la recherche du livre.',
+        });      }
     });
   }
 
@@ -267,7 +270,7 @@ onCoverFileSelected(event: any): void {
   if (this.cover) {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
-      this.fileSelected = e.target?.result ?? null; // Utilise null si result est undefined
+      this.fileSelected = e.target?.result ?? null; 
     };
     reader.readAsDataURL(this.cover); // Lit le fichier comme une URL de données (base64)
   }
@@ -343,14 +346,11 @@ onCoverFileSelected(event: any): void {
   unavailableBook: any = null; // Stocker le livre indisponible
 
 openUnavailableModal(book: any) {
-  console.log('Book reçu:', book);
-  console.log('Book ID:', book.id);
-
   if (book.stateBook === 'indisponible') {
     this.emprunteService.getEmpruntesForBook(book.id).subscribe({
       next: (response) => {
         this.unavailableBook = response[0];
-        console.log("Unavailable Book:", this.unavailableBook);
+        // console.log("Unavailable Book:", this.unavailableBook);
 
         // Ensure modal is in the DOM
         const modalElement = document.getElementById('unavailableModal');
@@ -362,7 +362,12 @@ openUnavailableModal(book: any) {
         }
       },
       error: (error) => {
-        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur lors au niveau de livre',
+          text: error.error || 'Une erreur est survenue lors de l ouverture de livre. Veuillez réessayer.',
+          confirmButtonText: 'OK'
+        });
       }
     });
   }
@@ -384,9 +389,7 @@ openUnavailableModal(book: any) {
           const modalInstance = new Modal(modalElement); // Créer une instance du modal
           modalInstance.hide(); // Fermer le modal
         }
-
-        console.log("test");
-        },
+      },
 
 
       error:(error)=>{

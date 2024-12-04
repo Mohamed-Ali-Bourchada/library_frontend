@@ -10,6 +10,9 @@ import { BooksForAdminComponent } from './admin-dashboard/books-for-admin/books-
 import { UsersForAdminComponent } from './admin-dashboard/users-for-admin/users-for-admin.component';
 import { CreateBookComponent } from './admin-dashboard/create-book/create-book.component';
 import { HistoriqueComponent } from './historique/historique/historique.component';
+import { EmprenterComponent } from './emprenter/emprenter/emprenter.component';
+
+
 import { AuthGuard } from './guards/auth.guard'; // The AuthGuard to protect routes
 import { AdminGuard } from './guards/admin.guard'; // The AdminGuard to protect admin routes
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +28,16 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'all-books', component: AllBooksComponent },
   { path: 'sign-up', component: SignUpComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  {path:'historique/:id',component:HistoriqueComponent},
+  {path:'emprenter',component:EmprenterComponent},
+  { path: 'admin-dashboard',component: AdminDashboardComponent 
+    ,children:[
+    {path:'',component:BooksForAdminComponent},
+    {path:'booksForAdmin',component:BooksForAdminComponent},
+    {path:'usersForAdmin',component:UsersForAdminComponent},
+    {path:'createBook',component:CreateBookComponent}
+  ]
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'historique/:id', component: HistoriqueComponent, canActivate: [AuthGuard] }, // Accessible by users
   {

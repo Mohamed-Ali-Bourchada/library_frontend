@@ -1,0 +1,106 @@
+/* General container styling */
+.emprenter-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    background: linear-gradient(145deg, #f4f4f4, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Card style */
+  .card {
+    margin: 100px auto auto;
+    padding:100px auto auto;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Book details layout */
+  .book-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Cover image */
+  .book-cover {
+    width: 180px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Book information */
+  .book-info h2 {
+    margin: 0;
+    color: #333333;
+    font-size: 1.5rem;
+  }
+  
+  .book-info p {
+    margin: 8px 0;
+    color: #666666;
+    line-height: 1.6;
+  }
+  
+  /* Return date input */
+  .return-date {
+    margin-bottom: 20px;
+  }
+  
+  .return-date label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #555555;
+  }
+  
+  .date-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Confirm button */
+  .confirm-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .confirm-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  .confirm-button:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .book-details {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .book-cover {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  

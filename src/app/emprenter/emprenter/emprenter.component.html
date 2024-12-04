@@ -1,0 +1,26 @@
+<div class="emprenter-container">
+    <div class="card">
+      <div class="book-details">
+        <img [src]="book.cover ? 'data:image/jpeg;base64,' + book.cover : 'images/bookCover.jpg'"
+        alt="Book Cover" class="book-cover" />
+        <div class="book-info">
+          <h2>{{ book.title }}</h2>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <p>{{ book.description }}</p>
+        </div>
+      </div>
+  
+      <div class="return-date">
+        <label for="dateRoutourPrevu">Select Return Date:</label>
+        <input
+          type="date"
+          id="dateRoutourPrevu"
+          [(ngModel)]="dateRoutourPrevu"
+          class="date-input"
+        />
+      </div>
+  
+      <button (click)="confirmEmprunt()" class="confirm-button">Confirm</button>
+    </div>
+  </div>
+  
