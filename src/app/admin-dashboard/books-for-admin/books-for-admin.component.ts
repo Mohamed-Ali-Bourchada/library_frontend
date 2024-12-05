@@ -18,20 +18,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 export class BooksForAdminComponent implements OnInit{
   books :Array<any>=[];
   page: number = 1;  // Current page
-  itemsPerPage: number = 10; 
+  itemsPerPage: number = 10;
   searchTerm: string = '';
   filteredBooks: any[] = [];
 
   selectedBook: any = {};  // Pour stocker les informations du livre sélectionné
 
   categories = [
-    'romantique',
-    'drole',
-    'fantastique',
-    'historique',
-    'educatif',
-    'aventure',
-    'educative'];
+    'Romantique',
+    'Drole',
+    'Fantastique',
+    'Historique',
+    'Aventure',
+    'Educative'];
 
   constructor(
     private bookService:BookservicesService,
@@ -59,7 +58,7 @@ export class BooksForAdminComponent implements OnInit{
     this.bookService.GetAllBooks().subscribe({
       next:(data)=>{
         this.books=data
-        this.filteredBooks = data; 
+        this.filteredBooks = data;
       },
       error: (err) => {
         console.error("Erreur lors de l'importer des livre", err);
@@ -270,12 +269,12 @@ onCoverFileSelected(event: any): void {
   if (this.cover) {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
-      this.fileSelected = e.target?.result ?? null; 
+      this.fileSelected = e.target?.result ?? null;
     };
     reader.readAsDataURL(this.cover); // Lit le fichier comme une URL de données (base64)
   }
 }
-  
+
 
   // Fonction pour mettre à jour la couverture
   // ne donctionne pas correctement
@@ -345,33 +344,7 @@ onCoverFileSelected(event: any): void {
   }
   unavailableBook: any = null; // Stocker le livre indisponible
 
-openUnavailableModal(book: any) {
-  if (book.stateBook === 'indisponible') {
-    this.emprunteService.getEmpruntesForBook(book.id).subscribe({
-      next: (response) => {
-        this.unavailableBook = response[0];
-        // console.log("Unavailable Book:", this.unavailableBook);
 
-        // Ensure modal is in the DOM
-        const modalElement = document.getElementById('unavailableModal');
-        if (modalElement) {
-          const modal = new Modal(modalElement);
-          modal.show();
-        } else {
-          console.error('Modal element not found!');
-        }
-      },
-      error: (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur lors au niveau de livre',
-          text: error.error || 'Une erreur est survenue lors de l ouverture de livre. Veuillez réessayer.',
-          confirmButtonText: 'OK'
-        });
-      }
-    });
-  }
-}
 
   // Fonction pour comparer la date actuelle avec la date de retour prévue
   isDateRetourBeforeNow(dateRetourPrevu: string | null): boolean {
@@ -380,24 +353,6 @@ openUnavailableModal(book: any) {
     const retourDate = new Date(dateRetourPrevu);
     return retourDate >= today; // Retourne true si la date de retour est dans le futur
   }
-  setRetourBook(empruentId:number):void
-  {
-    this.emprunteService.setBookRetour(empruentId).subscribe({
-      next:()=>{
-        const modalElement = document.getElementById('unavailableModal');
-        if (modalElement) {
-          const modalInstance = new Modal(modalElement); // Créer une instance du modal
-          modalInstance.hide(); // Fermer le modal
-        }
-      },
 
-
-      error:(error)=>{
-        console.error(error);
-
-      }
-    })
-
-  }
 
 }
