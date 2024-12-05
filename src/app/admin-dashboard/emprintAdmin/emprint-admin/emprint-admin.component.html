@@ -1,0 +1,94 @@
+    <!-- Tableau des emprents  -->
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            
+            <th>Utilisateur de l'emprente</th>
+            <th>Titre de livre</th>
+            <th>Auteur de livre </th>
+            <th>Disponibilité</th>
+            <th>date d'empreinte</th>
+            <th>date de retoure Prev</th>
+            <th>date de retoure effective</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emprint of emprints| paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+            <td>{{ emprint?.user?.fullName }}</td>
+            <td>{{ emprint?.book?.title }}</td>
+            <td>{{ emprint?.book?.author }}</td>
+            <td>
+                <!-- unavailableBook?.user?.telephone -->
+              <span [class]="emprint?.book?.stateBook == 'disponible' ? 'badge bg-success' : 'badge bg-danger'"
+                (click)="openUnavailableModal(emprint)">
+                {{ emprint?.book?.stateBook || 'Available' }}
+              </span>
+            </td>
+            <td>{{ emprint?.dateEmprunt }}</td>
+            <td class="sujet">{{ emprint.dateRoutourPrevu }}</td>
+            <td [ngClass]="{'text-danger': !emprint.dateRoutourEffective}">
+                {{ emprint.dateRoutourEffective ? emprint.dateRoutourEffective : "n'est pas encore retourné" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+
+
+
+      <div class="modal fade" id="unavailableModal" tabindex="-1" aria-labelledby="unavailableModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content shadow-lg rounded">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title d-flex align-items-center" id="unavailableModalLabel">
+                <i class="bi bi-book me-2"></i>{{ unavailableEmprient?.book?.title }}
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+      
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <div class="d-flex flex-column align-items-start">
+                <p class="mb-2">
+                  <i class="bi bi-person-circle text-primary me-2"></i>
+                  <strong>Nom et Prénom :</strong> {{ unavailableEmprient?.user?.fullName }}
+                </p>
+                <p class="mb-2">
+                  <i class="bi bi-envelope text-primary me-2"></i>
+                  <strong>Email :</strong> {{ unavailableEmprient?.user?.email }}
+                </p>
+                <p class="mb-2">
+                  <i class="bi bi-telephone text-primary me-2"></i>
+                  <strong>Téléphone :</strong> {{ unavailableEmprient?.user?.telephone }}
+                </p>
+                <p class="mb-2">
+                  <i class="bi bi-calendar text-primary me-2"></i>
+                  <strong>Date d'emprunt :</strong> {{ unavailableEmprient?.dateEmprunt | date:'shortDate' }}
+                </p>
+                <p class="mb-2" [ngClass]="{
+                    'text-success': isDateRetourBeforeNow(unavailableEmprient?.dateRoutourPrevu),
+                    'text-danger': !isDateRetourBeforeNow(unavailableEmprient?.dateRoutourPrevu)
+                  }">
+                  <i class="bi bi-calendar-check text-primary me-2"></i>
+                  <strong>Date de retour :</strong> {{ unavailableEmprient?.dateRoutourPrevu | date:'shortDate' }}
+                </p>
+      
+                <!-- Return Button -->
+                <button class="btn btn-warning mt-2" (click)="setRetourBook(unavailableEmprient?.id)" data-bs-dismiss="modal">
+                  <i class="bi bi-arrow-repeat me-1"></i> Marquer comme retourné
+                </button>
+              </div>
+            </div>
+      
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-circle"></i> Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      

@@ -59,7 +59,7 @@
           <p>Auteur: {{book.author }}</p>
           <!-- badge bg-success -->
           <h4><strong>Category:</strong> {{ book.category || 'Uncategorized' }}</h4>
-          <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-success'">{{ book.stateBook || 'Available' }}</span>
+          <span [class]="book.stateBook=='disponible'?'badge bg-success':'badge bg-danger'">{{ book.stateBook || 'Available' }}</span>
         </div>
       </div>
     </div>

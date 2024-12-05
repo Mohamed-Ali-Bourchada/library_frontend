@@ -27,7 +27,14 @@ export class EmpruntServicesService {
     const url=`${this.apiUrl}getHistorique/${userId}`;
     return this.http.get<Array<any>>(url);
   }
-  
+  public getAllEmprint():Observable<Array<any>>
+   {
+    return this.http.get<Array<any>>(`${this.apiUrl}getAll`)
+   }
+   public getEmprintById(empernId:number):Observable<Array<any>>
+   {
+    return this.http.get<Array<any>>(`${this.apiUrl}${empernId}`)
+   }
   addEmprunt(empreuntRequestDTO: EmpreuntRequestDTO): Observable<any> {
     return this.http.post(`${this.apiUrl}add`, empreuntRequestDTO, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

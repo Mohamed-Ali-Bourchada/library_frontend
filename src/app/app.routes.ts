@@ -15,6 +15,7 @@ import { EmprenterComponent } from './emprenter/emprenter/emprenter.component';
 import { AuthGuard } from './guards/auth.guard'; // The AuthGuard to protect routes
 import { AdminGuard } from './guards/admin.guard'; // The AdminGuard to protect admin routes
 import { AllBooksComponent } from './all-books/all-books.component';
+import { EmprintAdminComponent } from './admin-dashboard/emprintAdmin/emprint-admin/emprint-admin.component';
 
 export const routes: Routes = [
   // Accessible by everyone
@@ -37,7 +38,8 @@ export const routes: Routes = [
       { path: '', component: BooksForAdminComponent },
       { path: 'booksForAdmin', component: BooksForAdminComponent },
       { path: 'usersForAdmin', component: UsersForAdminComponent },
-      { path: 'createBook', component: CreateBookComponent }
+      { path: 'createBook', component: CreateBookComponent },
+      {path:'empreunte',component:EmprintAdminComponent}
     ]
   },
 ];
