@@ -61,7 +61,12 @@ export class EmprintAdminComponent {
     );
     this.page = 1; // Reset pagination to first page when filtering
   }
-
+  filterNotReturnedBooks() {
+    this.filteredEmprints = this.emprints.filter(emprint => !emprint?.dateRoutourEffective);
+  }
+   showAllBooks() {
+    this.filteredEmprints = [...this.emprints]; // Reset to show all books
+  }
   // Check if return date is before today
   isDateRetourBeforeNow(dateRetourPrevu: string | null): boolean {
     if (!dateRetourPrevu) return true;

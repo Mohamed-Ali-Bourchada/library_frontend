@@ -1,9 +1,10 @@
-Search Bar
-<div class="d-flex mb-3">
-  <input type="text" class="form-control" placeholder="Rechercher un emprunt (Nom, Livre, Auteur...)"
-    [(ngModel)]="searchTerm" (input)="filterEmprints()" />
-</div>
 
+<div class="d-flex mb-3">
+  <input type="text" class="form-control me-2" placeholder="Rechercher un emprunt (Nom, Livre, Auteur...)"
+    [(ngModel)]="searchTerm" (input)="filterEmprints()" />
+  <button class="btn btn-danger me-2" (click)="filterNotReturnedBooks()">Afficher les livres non retournés</button>
+  <button class="btn btn-primary" (click)="showAllBooks()">Afficher tous les livres</button>
+</div>
 <!-- Tableau des emprents -->
 <table class="table table-striped">
   <thead>
