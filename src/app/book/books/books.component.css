@@ -2,18 +2,27 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 20px 0;
+  flex-wrap: wrap;
+  /* Ensures the items wrap on smaller screens */
+  padding: 10px 0;
   background-color: #f4f7f9;
   border-bottom: 2px solid #ccc;
+  gap: 10px;
+  /* Adds spacing between items */
 }
 
 .cathegorie_Filter_items {
-  padding: 12px 25px;
+  padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 25px;
-  margin: 0 10px;
+  margin: 5px;
+  /* Adjusted margin for spacing */
+  text-align: center;
+  /* Center text on smaller screens */
+  white-space: nowrap;
+  /* Prevent text wrapping */
 }
 
 .cathegorie_Filter_items:hover {
@@ -28,6 +37,27 @@
 
 .cathegorie_Filter_items h4 {
   margin: 0;
+}
+
+/* Media Query for Small Screens (Mobile Devices) */
+@media (max-width: 768px) {
+  .cathegorie_Filter_Container {
+    flex-direction: column;
+    /* Stack items vertically */
+    align-items: stretch;
+    /* Full width for items */
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .cathegorie_Filter_items {
+    width: 90%;
+    /* Make items take up most of the screen width */
+    margin: 5px auto;
+    /* Center items horizontally */
+    font-size: 0.9rem;
+    /* Adjust font size */
+  }
 }
 .category-card {
   position: relative;
